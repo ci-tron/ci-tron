@@ -1,0 +1,11 @@
+/back/app/config/parameters.yml
+/back/bin/
+/back/build/
+/back/composer.phar
+/back/vendor/
+/back/web/bundles/
+/back/var/
+!back/var/cache/.gitkeep
+!back/var/logs/.gitkeep
+!back/var/sessions/.gitkeep
+/back/phpunit.xml
