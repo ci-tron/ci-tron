@@ -9,3 +9,4 @@
 !back/var/logs/.gitkeep
 !back/var/sessions/.gitkeep
 /back/phpunit.xml
+/front/node_modules/
