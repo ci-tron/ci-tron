@@ -4,9 +4,12 @@
 /back/composer.phar
 /back/vendor/
 /back/web/bundles/
-/back/var/
+/back/var/cache/*
+/back/var/logs/*
+/back/var/sessions/*
 !back/var/cache/.gitkeep
 !back/var/logs/.gitkeep
 !back/var/sessions/.gitkeep
+/back/var/bootstrap.php.cache
 /back/phpunit.xml
 /front/node_modules/
