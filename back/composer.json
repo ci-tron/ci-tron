@@ -1,6 +1,6 @@
 {
-    "name": "nek/back",
-    "license": "proprietary",
+    "name": "ci-tron/ci-tron-back",
+    "license": "MIT",
     "type": "project",
     "autoload": {
         "psr-4": {
@@ -29,7 +29,12 @@
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^2.7"
+        "symfony/phpunit-bridge": "^2.7",
+        "behat/behat": "^3.0",
+        "behat/mink-extension": "2.1.x-dev",
+        "behat/mink-goutte-driver": "^1.2",
+        "knplabs/friendly-contexts": "dev-master",
+        "behat/mink-browserkit-driver":  "~1.3@dev"
     },
     "scripts": {
         "post-install-cmd": [
