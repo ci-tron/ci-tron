@@ -25,16 +25,18 @@
         "symfony/monolog-bundle": "^2.8",
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
-        "incenteev/composer-parameter-handler": "^2.0"
+        "incenteev/composer-parameter-handler": "^2.0",
+        "jms/serializer-bundle": "^1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^2.7",
-        "behat/behat": "^3.0",
+        "behat/behat": "~3.0@dev",
         "behat/mink-extension": "2.1.x-dev",
         "behat/mink-goutte-driver": "^1.2",
         "knplabs/friendly-contexts": "dev-master",
-        "behat/mink-browserkit-driver":  "~1.3@dev"
+        "behat/mink-browserkit-driver":  "~1.3@dev",
+        "behat/mink": "~1.7@dev"
     },
     "scripts": {
         "post-install-cmd": [
@@ -64,5 +66,8 @@
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
         }
+    },
+    "config": {
+        "bin-dir": "bin"
     }
 }
