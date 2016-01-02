@@ -4,7 +4,7 @@ Feature: Send hello world on homepage
     Given I prepare a GET request on "/"
     When I send the request
     Then I should receive a 200 response
-    And the response should contain:
+    And the response should contain the following json:
     """
       [
         "hello world"

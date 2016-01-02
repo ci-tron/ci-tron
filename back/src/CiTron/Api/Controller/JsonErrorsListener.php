@@ -22,7 +22,7 @@ class JsonErrorsListener
      * JsonErrorsListener constructor.
      * @param string $environment global environment of the application
      */
-    public function __construct($environment)
+    public function __construct(string $environment)
     {
         $this->env = $environment;
     }
