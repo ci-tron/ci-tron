@@ -1,0 +1,15 @@
+language: php
+php:
+    - 7.0
+
+branches:
+    only:
+        - master
+
+before_script:
+    - composer update --prefer-source --dev
+
+script:
+    - cd back
+    - php bin/console server:run -e=test
+    - ./bin/behat --format=progress
