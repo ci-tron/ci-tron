@@ -13,3 +13,4 @@ script:
     - cd back
     - php bin/console server:run -e=test
     - ./bin/behat --format=progress
+    - ./bin/phpspec run

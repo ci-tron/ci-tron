@@ -27,10 +27,16 @@ class JsonErrorsListener
         $this->env = $environment;
     }
 
+    /**
+     * Modify the response to a json response if the status is not 200.
+     * (so this allows any type of 200 answer but only json errors)
+     *
+     * @param FilterResponseEvent $event
+     */
     public function onKernelResponse(FilterResponseEvent $event)
     {
         $response = $event->getResponse();
-        if ($this->env === 'prod' && $response->getStatusCode() !== 200) {
+        if ($this->env === 'prod' && !$response instanceof JsonResponse && $response->getStatusCode() !== 200) {
             $event->setResponse((new JsonResponse(['error' => $response->getStatusCode()], $response->getStatusCode())));
         }
     }
