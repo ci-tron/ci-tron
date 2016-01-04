@@ -12,4 +12,5 @@
 !back/var/sessions/.gitkeep
 /back/var/bootstrap.php.cache
 /back/phpunit.xml
+/back/behat.yml
 /front/node_modules/

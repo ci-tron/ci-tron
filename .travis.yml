@@ -1,0 +1,19 @@
+language: php
+php:
+    - 7.0
+
+branches:
+    only:
+        - master
+
+before_script:
+    - cd back
+    - composer install --prefer-source --dev
+    - cd ..
+
+script:
+    - cd back
+    - php bin/console server:run -e=test &
+    - sleep 1
+    - ./bin/behat --format=progress
+    - ./bin/phpspec run --format=pretty

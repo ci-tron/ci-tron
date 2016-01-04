@@ -1,0 +1,12 @@
+services:
+    citron.api.controller.data_to_json_listener:
+        class: CiTron\Api\Controller\DataToJsonListener
+        arguments: [ '@jms_serializer' ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.view, method: onView }
+
+    citron.api.controller.json_errors_listener:
+        class: CiTron\Api\Controller\JsonErrorsListener
+        arguments: [ %kernel.environment% ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }

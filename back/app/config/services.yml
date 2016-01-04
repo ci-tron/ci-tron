@@ -3,7 +3,10 @@
 parameters:
 #    parameter_name: value
 
+imports:
+    - { resource: services/api/listeners.yml }
+
 services:
 #    service_name:
-#        class: AppBundle\Directory\ClassName
+#        class: CiTron\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

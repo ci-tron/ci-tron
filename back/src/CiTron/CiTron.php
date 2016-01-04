@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle;
+namespace CiTron;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class AppBundle extends Bundle
+class CiTron extends Bundle
 {
 }
