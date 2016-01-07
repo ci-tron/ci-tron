@@ -14,12 +14,17 @@ namespace CiTron\User\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Class User
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="CiTron\User\Repository\UserRepository")
  * @ORM\Table(name="user")
+ *
+ * @UniqueEntity(fields={"email"}, message="Email already in use.")
+ * @UniqueEntity(fields={"username"}, message="Username already in use.")
  */
 class User implements UserInterface
 {
@@ -35,7 +40,7 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=255)
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
      */
     private $username;
 
@@ -44,13 +49,15 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="password", type="string")
+     * @Assert\Length(min = 4, minMessage="Password too short")
      */
     private $password;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string")
+     * @ORM\Column(name="email", type="string", unique=true)
+     * @Assert\Email()
      */
     private $email;
 

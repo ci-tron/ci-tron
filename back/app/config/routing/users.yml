@@ -1,0 +1,3 @@
+user_registration:
+    path: /registration
+    defaults: { _controller: 'CiTron:User\Registration:createUser' }

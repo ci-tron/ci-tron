@@ -4,7 +4,11 @@ default:
             path: %paths.base%/features
             contexts:
                 - Knp\FriendlyContexts\Context\ApiContext
+                - Knp\FriendlyContexts\Context\EntityContext
     extensions:
         Knp\FriendlyContexts\Extension:
             api:
                 base_url: http://localhost:8000/
+            entities:
+                namespaces:
+                    - CiTron

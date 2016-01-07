@@ -47,7 +47,6 @@ class DoctrineMappingCompilerPass implements CompilerPassInterface
 
         // Setting the mapping alias -> namespace
         foreach($mapping as $alias => $namespace) {
-            var_dump($alias);
             $ormConfigDef->addMethodCall('addEntityNamespace', [$alias, $namespace]);
         }
 
@@ -58,14 +57,13 @@ class DoctrineMappingCompilerPass implements CompilerPassInterface
 
         $chainDriverDef = $container->getDefinition('doctrine.orm.default_metadata_driver');
 
+        // Adding folders to driver
         foreach (array_keys($folders) as $namespace) {
             $chainDriverDef->addMethodCall('addDriver', [
                 new Reference('doctrine.orm.default_annotation_metadata_driver'),
                 $namespace,
             ]);
         }
-
-        // Adding folders to driver
     }
 
     /**
