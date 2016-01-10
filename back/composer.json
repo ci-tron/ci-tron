@@ -68,12 +68,6 @@
             "file": "app/config/parameters.yml"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/iamluc/FriendlyContexts"
-        }
-    ],
     "config": {
         "bin-dir": "bin"
     }
