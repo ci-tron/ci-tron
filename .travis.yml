@@ -9,6 +9,8 @@ branches:
 before_script:
     - cd back
     - composer install --prefer-source --dev
+    - php bin/console doctrine:database:create -e=test
+    - php bin/console doctrine:schema:update --force -e=test
     - cd ..
 
 script:
