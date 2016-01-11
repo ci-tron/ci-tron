@@ -18,6 +18,14 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class DoctrineMappingCompilerPass implements CompilerPassInterface
 {
+    /**
+     * This method adds special mapping for Doctrine in order to respect a domain approach for the structure
+     * of the application.
+     *
+     * The alias of User entity becomes `User:User`, the role is `User:Role`.
+     *
+     * @param ContainerBuilder $container
+     */
     public function process(ContainerBuilder $container)
     {
         $ormConfigDef = $container->getDefinition('doctrine.orm.default_configuration');
