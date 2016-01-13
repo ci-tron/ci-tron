@@ -1,0 +1,6 @@
+services:
+    citron.user.listener.doctrine:
+        class: CiTron\User\Listeners\DoctrineUserListener
+        arguments: [ "@security.encoder_factory" ]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }

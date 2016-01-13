@@ -1,3 +1,7 @@
 home_routes:
     prefix: /
     resource: routing/home.yml
+
+users_routes:
+    prefix: /users
+    resource: routing/users.yml
