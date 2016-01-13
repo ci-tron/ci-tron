@@ -56,14 +56,15 @@ class Role implements RoleInterface
     /**
      * @var User[]
      *
-     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="roles")
      */
-    private $user;
+    private $users;
 
     public function __construct($name = '')
     {
         $this->name     = $name;
         $this->children = new ArrayCollection;
+        $this->roles = new ArrayCollection;
     }
 
     /**
@@ -84,6 +85,10 @@ class Role implements RoleInterface
         return $this;
     }
 
+    /**
+     * @param Role $child
+     * @return self
+     */
     public function addChild(Role $child)
     {
         $this->children->add($child);
@@ -139,9 +144,9 @@ class Role implements RoleInterface
     /**
      * @return User[]
      */
-    public function getUser()
+    public function getUsers()
     {
-        return $this->user;
+        return $this->users;
     }
 
     /**

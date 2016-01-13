@@ -71,7 +71,7 @@ class User implements UserInterface
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Role", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Role", cascade={"persist"}, inversedBy="users")
      */
     private $roles;
 
