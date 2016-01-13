@@ -1,6 +1,8 @@
 Ci-tron
 =======
 
+[![Join the chat at https://gitter.im/ci-tron/ci-tron](https://badges.gitter.im/ci-tron/ci-tron.svg)](https://gitter.im/ci-tron/ci-tron?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/ci-tron/ci-tron.svg?branch=master)](https://travis-ci.org/ci-tron/ci-tron)
 
 Ci-tron is a **free** and **open source** continuous integration tool !
