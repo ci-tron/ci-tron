@@ -19,6 +19,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RegistrationController extends Controller
 {
+    /**
+     * Allow to create new user
+     *
+     * @param Request $request
+     * @return array|JsonResponse
+     */
     public function createUserAction(Request $request)
     {
         $user = new User();

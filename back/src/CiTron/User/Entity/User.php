@@ -127,13 +127,11 @@ class User implements UserInterface
      * @param Role $role
      * @return self
      */
-    /*
     public function addRole(Role $role)
     {
         $this->roles->add($role);
         return $this;
     }
-    */
 
     /**
      * @param  string $salt
