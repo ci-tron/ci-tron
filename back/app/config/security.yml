@@ -12,22 +12,35 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+
     providers:
-        in_memory:
-            memory: ~
+        main:
+            entity:
+                class: User:User
+                property: username
 
     firewalls:
-        # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
+        secured_area:
+            pattern:    ^/
+            form_login:
+                provider: main
+                check_path: /login
+                login_path: /login-status
+                always_use_default_target_path: true
+                default_target_path: /login-status
+                failure_path: /login-status
+                default_target_path: profile
+                username_parameter: username
+                password_parameter: password
+                require_previous_session: false
+            logout:
+                path:   logout
+                target: /logout-success
             anonymous: ~
-            # activate different ways to authenticate
 
-            # http_basic: ~
-            # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+    access_control:
+        - { path: ^/secured, roles: ROLE_USER }

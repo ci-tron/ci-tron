@@ -19,6 +19,7 @@ class AppKernel extends Kernel
 
             // Citron dependencies
             new JMS\SerializerBundle\JMSSerializerBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
 
             // Citron init
             new CiTron\CiTron(),

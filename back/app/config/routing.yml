@@ -3,5 +3,5 @@ home_routes:
     resource: routing/home.yml
 
 users_routes:
-    prefix: /users
+    prefix: /secured/users
     resource: routing/users.yml

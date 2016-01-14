@@ -1,4 +1,5 @@
-user_registration:
-    path: /registration
-    defaults: { _controller: 'CiTron:User\Registration:createUser' }
-    methods: [POST]
+
+
+success_login:
+    path: /success-login
+    defaults: { _controller: 'CiTron:User\Login:success' }

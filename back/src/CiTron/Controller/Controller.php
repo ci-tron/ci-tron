@@ -12,6 +12,7 @@ namespace CiTron\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class Controller
@@ -39,6 +40,16 @@ class Controller extends BaseController
     protected function successResponse($message)
     {
         return ['message' => $message];
+    }
+
+    /**
+     * @param string $message
+     * @param integer $code
+     * @return JsonResponse
+     */
+    protected function errorResponse($message, $code)
+    {
+        return new JsonResponse(['message' => $message], $code);
     }
 
     /**

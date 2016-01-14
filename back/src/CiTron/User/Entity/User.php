@@ -28,6 +28,17 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User implements UserInterface
 {
+    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+    const ROLE_USER = 'ROLE_USER';
+
+    /**
+     * The default key is not so awesome. To avoid salt to be guessable it could be nice to redefined the salt.
+     * (but that's not an obligation as one is randomly generated)
+     *
+     * @var string
+     */
+    private static $saltKey = 'key';
+
     /**
      * @var int
      *
@@ -69,20 +80,25 @@ class User implements UserInterface
     private $salt;
 
     /**
-     * @var ArrayCollection
+     * @var array
      *
-     * @ORM\ManyToMany(targetEntity="Role", cascade={"persist"}, inversedBy="users")
+     * @ORM\Column(name="roles", type="array")
      */
     private $roles;
 
+    /**
+     * User constructor.
+     *
+     * @param string $salt
+     */
     public function __construct($salt = null)
     {
         if (is_null($salt)) {
-            $this->salt = md5(uniqid() . 'key');
+            $this->salt = md5(uniqid() . User::$saltKey);
         } else {
             $this->salt = $salt;
         }
-        $this->roles = new ArrayCollection();
+        $this->roles = [];
     }
 
     /**
@@ -104,7 +120,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param  Role[] $roles
+     * @param  string[] $roles
      * @return self
      */
     public function setRoles(array $roles)
@@ -114,22 +130,22 @@ class User implements UserInterface
     }
 
     /**
-     * @param Role[] $roles
+     * @param string[] $roles
      * @return self
      */
     public function addRoles(array $roles)
     {
-        $this->roles->add($roles);
+        $this->roles = array_merge($this->roles, $roles);
         return $this;
     }
 
     /**
-     * @param Role $role
+     * @param string $role
      * @return self
      */
-    public function addRole(Role $role)
+    public function addRole($role)
     {
-        $this->roles->add($role);
+        $this->roles[] = $role;
         return $this;
     }
 
@@ -167,11 +183,11 @@ class User implements UserInterface
      * and populated in any number of different ways when the user object
      * is created.
      *
-     * @return Role[] The user roles
+     * @return string[] The user roles
      */
     public function getRoles()
     {
-        return $this->roles->toArray();
+        return $this->roles;
     }
 
     /**
@@ -225,6 +241,14 @@ class User implements UserInterface
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * @param string $saltKey
+     */
+    public static function setSaltKey($saltKey)
+    {
+        User::$saltKey = $saltKey;
     }
 
     /**
