@@ -17,16 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 class LoginController extends Controller
 {
     /**
-     * The user is redirected to this action after success login
-     *
-     * @return array
-     */
-    public function successAction()
-    {
-        return $this->successResponse('Success login');
-    }
-
-    /**
      * Getting the status of authentication.
      * Notice: if the client get this page, the session will be refresh for a new 3600s.
      *

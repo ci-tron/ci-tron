@@ -1,5 +1,1 @@
 
-
-success_login:
-    path: /success-login
-    defaults: { _controller: 'CiTron:User\Login:success' }
