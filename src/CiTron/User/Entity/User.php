@@ -108,6 +108,13 @@ class User implements UserInterface, EqualableInterface
     private $roles;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="CiTron\Project\Entity\Project", mappedBy="user")
+     */
+    private $projects;
+
+    /**
      * User constructor.
      *
      * @param string $salt
