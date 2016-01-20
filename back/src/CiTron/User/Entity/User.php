@@ -91,7 +91,7 @@ class User implements UserInterface
      *
      * @param string $salt
      */
-    public function __construct($salt = null)
+    public function __construct(string $salt = null)
     {
         if (is_null($salt)) {
             $this->salt = md5(uniqid() . User::$saltKey);
@@ -113,9 +113,10 @@ class User implements UserInterface
      * @param  string $password
      * @return self
      */
-    public function setPassword($password)
+    public function setPassword(string $password) : User
     {
         $this->password = $password;
+
         return $this;
     }
 
@@ -123,9 +124,10 @@ class User implements UserInterface
      * @param  string[] $roles
      * @return self
      */
-    public function setRoles(array $roles)
+    public function setRoles(array $roles) : User
     {
         $this->roles = new ArrayCollection($roles);
+
         return $this;
     }
 
@@ -133,9 +135,10 @@ class User implements UserInterface
      * @param string[] $roles
      * @return self
      */
-    public function addRoles(array $roles)
+    public function addRoles(array $roles) : User
     {
         $this->roles = array_merge($this->roles, $roles);
+
         return $this;
     }
 
@@ -143,7 +146,7 @@ class User implements UserInterface
      * @param string $role
      * @return self
      */
-    public function addRole($role)
+    public function addRole(string $role) : User
     {
         $this->roles[] = $role;
         return $this;
@@ -153,9 +156,10 @@ class User implements UserInterface
      * @param  string $salt
      * @return self
      */
-    public function setSalt($salt)
+    public function setSalt(string $salt) : User
     {
         $this->salt = $salt;
+
         return $this;
     }
 
@@ -163,9 +167,10 @@ class User implements UserInterface
      * @param  string $username
      * @return self
      */
-    public function setUsername($username)
+    public function setUsername($username) : User
     {
         $this->username = $username;
+
         return $this;
     }
 
@@ -185,7 +190,7 @@ class User implements UserInterface
      *
      * @return string[] The user roles
      */
-    public function getRoles()
+    public function getRoles() : array
     {
         return $this->roles;
     }
@@ -229,9 +234,10 @@ class User implements UserInterface
      * @param  string $email
      * @return self
      */
-    public function setEmail($email)
+    public function setEmail(string $email)
     {
         $this->email = $email;
+
         return $this;
     }
 
@@ -246,7 +252,7 @@ class User implements UserInterface
     /**
      * @param string $saltKey
      */
-    public static function setSaltKey($saltKey)
+    public static function setSaltKey(string $saltKey)
     {
         User::$saltKey = $saltKey;
     }
