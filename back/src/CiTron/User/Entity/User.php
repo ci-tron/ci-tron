@@ -167,7 +167,7 @@ class User implements UserInterface
      * @param  string $username
      * @return self
      */
-    public function setUsername($username) : User
+    public function setUsername(string $username) : User
     {
         $this->username = $username;
 
