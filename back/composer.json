@@ -4,7 +4,8 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "": "src/"
+            "": "src/",
+            "CiTron\\Behat\\": "features/bootstrap"
         },
         "files": [
             "app/AppKernel.php"
@@ -26,7 +27,8 @@
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
-        "jms/serializer-bundle": "^1.1"
+        "jms/serializer-bundle": "^1.1",
+        "doctrine/doctrine-fixtures-bundle": "^2.3"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
@@ -37,7 +39,8 @@
         "knplabs/friendly-contexts": "dev-sf3",
         "behat/mink-browserkit-driver":  "~1.3@dev",
         "behat/mink": "~1.7@dev",
-        "phpspec/phpspec": "~2.4"
+        "phpspec/phpspec": "dev-master",
+        "phpspec/prophecy": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

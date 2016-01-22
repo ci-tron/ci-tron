@@ -12,6 +12,7 @@ namespace CiTron\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class Controller
@@ -34,11 +35,21 @@ class Controller extends BaseController
 
     /**
      * @param string $message
-     * @return array
+     * @return JsonResponse
      */
-    protected function successResponse($message)
+    protected function successResponse(string $message) : JsonResponse
     {
-        return ['message' => $message];
+        return new JsonResponse(['message' => $message]);
+    }
+
+    /**
+     * @param string $message
+     * @param int    $code
+     * @return JsonResponse
+     */
+    protected function errorResponse(string $message, int $code) : JsonResponse
+    {
+        return new JsonResponse(['message' => $message], $code);
     }
 
     /**
@@ -47,7 +58,7 @@ class Controller extends BaseController
      * @param FormInterface $form
      * @return array An of strings representing the errors of the form.
      */
-    protected function getFormErrors(FormInterface $form)
+    protected function getFormErrors(FormInterface $form) : array
     {
         $stringErrors = [];
 
