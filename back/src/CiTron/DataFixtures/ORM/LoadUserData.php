@@ -27,7 +27,16 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
             ->addRole(User::ROLE_SUPER_ADMIN)
         ;
 
+        $normalUser = new User();
+        $normalUser
+            ->setUsername('user')
+            ->setPassword('user')
+            ->setEmail('user@ci-tron.org')
+            ->addRole(User::ROLE_USER)
+        ;
+
         $manager->persist($admin);
+        $manager->persist($normalUser);
         $manager->flush();
     }
 

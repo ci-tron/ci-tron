@@ -13,9 +13,12 @@ namespace CiTron\User\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Nekland\Tools\EqualableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use JMS\Serializer\Annotation as JMS;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Class User
@@ -25,8 +28,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @UniqueEntity(fields={"email"}, message="Email already in use.")
  * @UniqueEntity(fields={"username"}, message="Username already in use.")
+ *
+ * @JMS\ExclusionPolicy("all")
  */
-class User implements UserInterface
+class User implements UserInterface, EqualableInterface
 {
     const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
     const ROLE_USER = 'ROLE_USER';
@@ -52,6 +57,8 @@ class User implements UserInterface
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=255, unique=true)
+     * @JMS\Groups({"standard", "current"})
+     * @JMS\Expose
      */
     private $username;
 
@@ -67,8 +74,22 @@ class User implements UserInterface
     /**
      * @var string
      *
+     * @ORM\Column
+     * @Gedmo\Slug(fields={"username"})
+     *
+     * @JMS\Groups({"standard", "current"})
+     * @JMS\Expose
+     */
+    private $slug;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="email", type="string", unique=true)
      * @Assert\Email()
+     *
+     * @JMS\Groups({"current"})
+     * @JMS\Expose
      */
     private $email;
 
@@ -126,7 +147,7 @@ class User implements UserInterface
      */
     public function setRoles(array $roles) : User
     {
-        $this->roles = new ArrayCollection($roles);
+        $this->roles = $roles;
 
         return $this;
     }
@@ -250,6 +271,25 @@ class User implements UserInterface
     }
 
     /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     * @return User
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
      * @param string $saltKey
      */
     public static function setSaltKey(string $saltKey)
@@ -299,5 +339,17 @@ class User implements UserInterface
         $this->username = $parameters['username'];
         $this->email    = $parameters['email'];
         $this->roles    = new ArrayCollection($parameters['roles']);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function equals($item)
+    {
+        if (!$item instanceof User) {
+            return false;
+        }
+
+        return $this->id === $item->getId();
     }
 }

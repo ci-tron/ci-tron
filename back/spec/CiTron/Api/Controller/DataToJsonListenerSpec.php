@@ -38,4 +38,10 @@ class DataToJsonListenerSpec extends ObjectBehavior
 
         $this->onView($event);
     }
+
+    function it_should_return_new_response_when_controller_return_string(Serializer $serializer, GetResponseForControllerResultEvent $event)
+    {
+        $event->getControllerResult()->willReturn('random string');
+        $event->setResponse(Argument::type('Symfony\Component\HttpFoundation\Response'));
+    }
 }
