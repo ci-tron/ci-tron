@@ -18,23 +18,27 @@ use JMS\Serializer\SerializationContext;
 class ProfileController extends Controller
 {
     /**
-     * @param User|null $user
-     * @return mixed|string
+     * @param User $user
+     * @return string
      */
-    public function getUserAction(User $user = null)
+    public function getUserProfileAction(User $user)
     {
-        if (null === $user) {
-            return $this->get('jms_serializer')->serialize(
-                $this->getUser(),
-                'json',
-                SerializationContext::create()->setGroups(['current'])
-            );
-        }
-
         return $this->get('jms_serializer')->serialize(
             $user,
             'json',
             SerializationContext::create()->setGroups(['standard'])
+        );
+    }
+
+    /**
+     * @return string
+     */
+    public function getMyProfileAction()
+    {
+        return $this->get('jms_serializer')->serialize(
+            $this->getUser(),
+            'json',
+            SerializationContext::create()->setGroups(['current'])
         );
     }
 }

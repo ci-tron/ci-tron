@@ -15,11 +15,12 @@ use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use GuzzleHttp\Exception\BadResponseException;
+use Knp\FriendlyContexts\Context\Context as FriendlyContext;
 
 /**
  * Defines application features from the specific context.
  */
-class FeatureContext extends \Knp\FriendlyContexts\Context\Context implements Context, SnippetAcceptingContext
+class FeatureContext extends FriendlyContext implements Context, SnippetAcceptingContext
 {
     /**
      * @var \Knp\FriendlyContexts\Context\ApiContext
