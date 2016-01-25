@@ -1,1 +1,4 @@
-
+user_deletion:
+    path: /me/delete
+    defaults: { _controller: 'CiTron:User/Deletion:delete' }
+    methods: [DELETE]

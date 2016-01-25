@@ -1,0 +1,4 @@
+csrg_generation:
+    path: /csrf/{name}.json
+    defaults: { _controller: 'CiTron:Security:getCsrfToken' }
+    methods: [GET]
