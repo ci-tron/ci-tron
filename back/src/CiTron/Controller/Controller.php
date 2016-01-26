@@ -53,6 +53,17 @@ class Controller extends BaseController
     }
 
     /**
+     * @param FormInterface $form
+     * @return JsonResponse
+     */
+    protected function formErrorResponse(FormInterface $form) : JsonResponse
+    {
+        return new JsonResponse([
+            'errors' => $this->getFormErrors($form),
+        ], 400);
+    }
+
+    /**
      * Get all errors of the form recursively
      *
      * @param FormInterface $form
