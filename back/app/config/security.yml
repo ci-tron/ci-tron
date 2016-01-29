@@ -29,17 +29,17 @@ security:
             form_login:
                 provider: main
                 check_path: /login
-                login_path: /login-status
+                login_path: /login-status.json
                 always_use_default_target_path: true
-                default_target_path: /login-status
-                failure_path: /login-status
+                default_target_path: /login-status.json
+                failure_path: /login-status.json
                 default_target_path: profile
                 username_parameter: username
                 password_parameter: password
                 require_previous_session: false
             logout:
                 path:   logout
-                target: /logout-success
+                target: /logout-success.json
             anonymous: ~
 
     access_control:

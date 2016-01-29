@@ -1,1 +1,10 @@
 
+current_user_profile:
+    path: /profile.json
+    defaults: { _controller: 'CiTron:User/Profile:getMyProfile' }
+    methods: [GET]
+
+user_profile:
+    path: /profile/{slug}.json
+    defaults: { _controller: 'CiTron:User/Profile:getUserProfile' }
+    methods: [GET]

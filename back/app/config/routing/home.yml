@@ -14,7 +14,7 @@ login_check:
     methods: [POST]
 
 login_status:
-    path: /login-status
+    path: /login-status.json
     defaults: { _controller: 'CiTron:User\Login:status' }
     methods: [GET]
 
@@ -23,5 +23,5 @@ logout:
     methods: [GET]
 
 logout_success:
-    path: /logout-success
+    path: /logout-success.json
     defaults: { _controller: 'CiTron:User\Login:logoutSuccess' }

@@ -4,6 +4,7 @@ namespace CiTron\Api\Controller;
 
 use CiTron\Symfony\HttpFoundation\JsonResponse;
 use JMS\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 
 /**
@@ -32,9 +33,17 @@ class DataToJsonListener
     {
         $controllerResult = $event->getControllerResult();
 
-        $response = new JsonResponse();
-        $response->setJsonData($this->serializer->serialize($controllerResult, 'json'));
+        if (is_string($controllerResult)) {
+            if (null === json_decode($controllerResult)) {
+                $event->setResponse(new Response($controllerResult));
+                return;
+            }
+        } else {
+            $controllerResult = $this->serializer->serialize($controllerResult, 'json');
+        }
 
+        $response = new JsonResponse();
+        $response->setJsonData($controllerResult);
         $event->setResponse($response);
     }
 }
