@@ -8,18 +8,23 @@
  * on the root directory of this project
  */
 
-namespace CiTron\Controller\User;
+namespace CiTron\User\Controller;
 
 
 use CiTron\Controller\Controller;
 use CiTron\User\Entity\User;
 use JMS\Serializer\SerializationContext;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class ProfileController extends Controller
 {
     /**
      * @param User $user
      * @return string
+     *
+     * @Route("secured/users/profile/{slug}.json", name="user_profile")
+     * @Method({"GET"})
      */
     public function getUserProfileAction(User $user)
     {
@@ -32,6 +37,9 @@ class ProfileController extends Controller
 
     /**
      * @return string
+     *
+     * @Route("secured/users/profile.json", name="user_current_profile")
+     * @Method({"GET"})
      */
     public function getMyProfileAction()
     {

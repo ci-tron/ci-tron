@@ -8,7 +8,7 @@
  * on the root directory of this project
  */
 
-namespace CiTron\Controller\User;
+namespace CiTron\User\Controller;
 
 
 use CiTron\Controller\Controller;
@@ -16,6 +16,8 @@ use CiTron\Symfony\HttpFoundation\JsonResponse;
 use CiTron\User\Entity\User;
 use CiTron\User\Form\UserType;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class RegistrationController extends Controller
 {
@@ -24,6 +26,9 @@ class RegistrationController extends Controller
      *
      * @param Request $request
      * @return array|JsonResponse
+     *
+     * @Route("/registration", name="registration")
+     * @Method({"POST"})
      */
     public function createUserAction(Request $request)
     {

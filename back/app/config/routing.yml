@@ -1,7 +1,15 @@
-home_routes:
-    prefix: /
-    resource: routing/home.yml
+front:
+    resource: '@CiTron/Controller/DefaultController.php'
+    type: annotation
 
-users_routes:
-    prefix: /secured/users
-    resource: routing/users.yml
+user:
+    resource: '@CiTron/User/Controller'
+    type: annotation
+
+login_check:
+    path: /login
+    methods: [POST]
+
+logout:
+    path: /logout
+    methods: [GET]
