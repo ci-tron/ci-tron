@@ -8,11 +8,12 @@
  * on the root directory of this project
  */
 
-namespace CiTron\Controller\User;
+namespace CiTron\User\Controller;
 
 
 use CiTron\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class LoginController extends Controller
 {
@@ -21,6 +22,9 @@ class LoginController extends Controller
      * Notice: if the client get this page, the session will be refresh for a new 3600s.
      *
      * @return array
+     *
+     * @Route("/login-status.json", name="login_status")
+     * @Method({"GET"})
      */
     public function statusAction()
     {
@@ -35,6 +39,9 @@ class LoginController extends Controller
      * Chceks if the user is successfully logged out.
      *
      * @return array|\Symfony\Component\HttpFoundation\JsonResponse
+     *
+     * @Route("/logout-success.json", name="logout_success")
+     * @Method({"GET"})
      */
     public function logoutSuccessAction()
     {
