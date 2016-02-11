@@ -9,6 +9,20 @@ imports:
 
 
 services:
-#    service_name:
-#        class: CiTron\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    app.project.repository:
+        class: 'CiTron\Project\Repository\ProjectRepository'
+        arguments: ['CiTron\Project\Entity\Project']
+        factory: ['@doctrine.orm.entity_manager', 'getRepository']
+
+    app.project.voter:
+        class: CiTron\Project\Security\ProjectVoter
+        tags:
+            - { name: security.voter }
+        public: false
+
+    app.project.param_converter:
+        class: 'CiTron\Project\Request\ParamConverter\ProjectParamConverter'
+        arguments:
+            - '@app.project.repository'
+        tags:
+            - { name: 'request.param_converter', priority: 1 }

@@ -126,7 +126,8 @@ class User implements UserInterface, EqualableInterface
         } else {
             $this->salt = $salt;
         }
-        $this->roles = [];
+
+        $this->roles = [self::ROLE_USER];
     }
 
     /**

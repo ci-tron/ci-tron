@@ -10,9 +10,9 @@
 
 namespace CiTron\Controller;
 
+use CiTron\Symfony\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class Controller

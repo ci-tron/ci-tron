@@ -10,11 +10,11 @@
 
 namespace CiTron\Project\Form;
 
-
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Range;
 
 class ProjectType extends AbstractType
 {
@@ -23,8 +23,10 @@ class ProjectType extends AbstractType
         $builder
             ->add('name')
             ->add('repository')
-            ->add('visibility', CheckboxType::class, [
+            ->add('visibility', IntegerType::class, [
                 'required' => false,
+                'empty_data' => true,
+                'constraints' => new Range(['min' => 0, 'max' => 2]),
             ])
         ;
     }

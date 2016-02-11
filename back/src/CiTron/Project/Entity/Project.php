@@ -10,14 +10,18 @@
  */
 namespace CiTron\Project\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use CiTron\User\Entity\User;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class User
  *
  * @ORM\Entity(repositoryClass="CiTron\Project\Repository\ProjectRepository")
  * @ORM\Table(name="project")
+ *
+ * @JMS\ExclusionPolicy("all")
  */
 class Project
 {
@@ -34,20 +38,34 @@ class Project
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=255, unique=false)
+     * @JMS\Groups({"standard", "current"})
+     * @JMS\Expose
      */
     private $name;
 
     /**
      * @var string
      *
+     * @ORM\Column
+     * @Gedmo\Slug(fields={"name"})
+     * @JMS\Groups({"standard", "current"})
+     * @JMS\Expose
+     */
+    private $slug;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="repository", type="string", length=255, unique=false)
+     * @JMS\Groups({"standard", "current"})
+     * @JMS\Expose
      */
     private $repository;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="visibility", type="boolean")
+     * @ORM\Column(name="visibility", type="integer")
      */
     private $visibility;
 
@@ -60,7 +78,6 @@ class Project
 
     public function __construct()
     {
-        $this->visibility = true;
     }
 
     /**
