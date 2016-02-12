@@ -4,9 +4,9 @@
 composer.phar
 /vendor/
 /web/bundles/
-/var/cache/*
-/var/logs/*
-/var/sessions/*
+/var/cache/
+/var/logs/
+/var/sessions/
 !var/cache/.gitkeep
 !var/logs/.gitkeep
 !var/sessions/.gitkeep
@@ -17,3 +17,5 @@ behat.yml
 /npm-debug.log
 /src-js/**/*.map
 /src-js/**/*.js
+web/node_modules
+web/src-js
