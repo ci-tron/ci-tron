@@ -32,6 +32,10 @@ class RegistrationController extends Controller
      */
     public function createUserAction(Request $request)
     {
+        if ($this->getUser() !== null) {
+            return $this->errorResponse('Cannot create a new user.', 400);
+        }
+
         $user = new User();
 
         $form = $this->createNamedForm('', UserType::class, $user);
