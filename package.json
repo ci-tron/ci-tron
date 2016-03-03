@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "start": "gulp",
-    "postinstall": "jspm install"
+    "postinstall": "jspm install",
+    "bundle": "jspm bundle app web/build/main.min.js --minify"
   },
   "license": "MIT",
   "dependencies": {

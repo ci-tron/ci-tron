@@ -33,6 +33,9 @@ class DefaultController extends Controller
         if ($this->container->getParameter('kernel.environment') === 'dev') {
             return new Response(file_get_contents($rootDir . '/../src-js/dev.html'));
         }
+        if ($this->container->getParameter('kernel.environment') === 'prod') {
+            return new Response(file_get_contents($rootDir . '/../src-js/prod.html'));
+        }
 
         throw new \Exception ('This part is not done for now: there is code to write.');
     }

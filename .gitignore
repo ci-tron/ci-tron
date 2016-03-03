@@ -15,10 +15,7 @@ phpunit.xml
 behat.yml
 /node_modules
 /npm-debug.log
-/src-js/**/*.map
 /src-js/**/*.js
-web/node_modules
-web/src-js
 /web/jspm_packages
-/web/build
 /web/app
+/web/build
