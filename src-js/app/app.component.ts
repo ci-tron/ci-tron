@@ -1,7 +1,8 @@
 import {Component} from 'angular2/core';
 
 @Component({
-    selector: 'ci-tron-app',
-    template: '<h1>Ci-tron</h1>'
+    selector: 'my-app',
+    template: '<h1>I\'m ci-tron !!!</h1>'
 })
+
 export class AppComponent { }

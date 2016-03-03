@@ -31,8 +31,9 @@ class DefaultController extends Controller
         }
 
         if ($this->container->getParameter('kernel.environment') === 'dev') {
-            return new Response(file_get_contents($rootDir . '/../front.html'));
+            return new Response(file_get_contents($rootDir . '/../src-js/dev.html'));
         }
+
         throw new \Exception ('This part is not done for now: there is code to write.');
     }
 }

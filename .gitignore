@@ -19,3 +19,6 @@ behat.yml
 /src-js/**/*.js
 web/node_modules
 web/src-js
+/web/jspm_packages
+/web/build
+/web/app
