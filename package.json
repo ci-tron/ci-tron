@@ -2,26 +2,16 @@
   "name": "ci-tron-front",
   "version": "1.0.0",
   "scripts": {
-    "tsc": "tsc",
-    "tsc:w": "tsc -w",
-    "lite": "lite-server",
-    "start": "concurrent \"npm run tsc:w\" \"gulp\" "
+    "start": "gulp",
+    "postinstall": "jspm install"
   },
   "license": "MIT",
   "dependencies": {
-    "angular2": "2.0.0-beta.3",
-    "es6-promise": "^3.0.2",
-    "es6-shim": "^0.33.3",
-    "fs-extra": "^0.26.5",
-    "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.0",
-    "systemjs": "0.19.6",
-    "zone.js": "0.5.11"
+    "fs-extra": "^0.26.5"
   },
   "devDependencies": {
     "bin-version-check": "^2.1.0",
     "browser-sync": "^2.11.1",
-    "concurrently": "^1.0.0",
     "gulp": "^3.9.1",
     "gulp-connect-php": "0.0.7",
     "gulp-typescript": "^2.12.0",
