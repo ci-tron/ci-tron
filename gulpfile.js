@@ -26,7 +26,10 @@ gulp.task('clean.dev', function () {
 });
 
 gulp.task('build.js.dev', ['clean.dev'], function () {
-    gulp.src(['./' + APP_DIR + '/**/*.ts'])
+    gulp.src([
+            './' + APP_DIR + '/**/*.ts',
+            'typings/browser.d.ts'
+        ])
         .pipe(ts(TS_CONFIG))
         .pipe(gulp.dest('./' + APP_DEST));
 });
@@ -43,6 +46,8 @@ gulp.task('watch.dev', function () {
 
         } else if (context.type === 'deleted') {
             fs.unlinkSync(compileToFile);
+        } else {
+            console.log('Action "' + context.type + '" not supported by the watcher');
         }
 
         console.info('File ' + context.path  + ' was ' + context.type);

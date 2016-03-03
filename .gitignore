@@ -19,3 +19,4 @@ behat.yml
 /web/jspm_packages
 /web/app
 /web/build
+/typings
