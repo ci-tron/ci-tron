@@ -28,19 +28,19 @@ security:
             pattern:    ^/
             form_login:
                 provider: main
-                check_path: /login
-                login_path: /login-status.json
+                check_path: /back/login
+                login_path: /back/login-status.json
                 always_use_default_target_path: true
-                default_target_path: /login-status.json
-                failure_path: /login-status.json
+                default_target_path: /back/login-status.json
+                failure_path: /back/login-status.json
                 default_target_path: profile
                 username_parameter: username
                 password_parameter: password
                 require_previous_session: false
             logout:
                 path:   logout
-                target: /logout-success.json
+                target: /back/logout-success.json
             anonymous: ~
 
     access_control:
-        - { path: ^/secured, roles: ROLE_USER }
+        - { path: ^/back/secured, roles: ROLE_USER }

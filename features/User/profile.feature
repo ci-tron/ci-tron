@@ -12,7 +12,7 @@ Feature: Being able to get and edit the user profile
 
   Scenario: getting a user profile
     Given I am logged with username "Nek" and password "nek"
-    And I prepare a GET request on "/secured/users/profile/valanz.json"
+    And I prepare a GET request on "/back/secured/users/profile/valanz.json"
     When I send the request
     Then I should receive a 200 response
     And the response should contains the following json:
@@ -25,7 +25,7 @@ Feature: Being able to get and edit the user profile
 
   Scenario: getting self user profile
     Given I am logged with username "Nek" and password "nek"
-    And I prepare a GET request on "/secured/users/profile.json"
+    And I prepare a GET request on "/back/secured/users/profile.json"
     When I send the request
     Then I should receive a 200 response
     And the response should contains the following json:
@@ -38,6 +38,6 @@ Feature: Being able to get and edit the user profile
       """
 
   Scenario: failing to get a user profile
-    Given I prepare a GET request on "/secured/users/profile/valanz.json"
+    Given I prepare a GET request on "/back/secured/users/profile/valanz.json"
     When I send the request
     Then I should receive a 401 response

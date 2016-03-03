@@ -56,7 +56,7 @@ class FeatureContext extends FriendlyContext implements Context, SnippetAcceptin
             $response = $this
                 ->getRequestBuilder()
                 ->setMethod('POST')
-                ->setUri('/login')
+                ->setUri('/back/login')
                 ->setBody(['username' => $username, 'password' => $password])
                 ->build()
                 ->send()

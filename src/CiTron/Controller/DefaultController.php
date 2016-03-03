@@ -30,7 +30,7 @@ class DefaultController extends Controller
             $this->container->get('profiler')->disable();
         }
 
-        if ($this->container->getParameter('kernel.environment') === 'dev') {
+        if (in_array($this->container->getParameter('kernel.environment'), ['dev', 'test'])) {
             return new Response(file_get_contents($rootDir . '/../src-js/dev.html'));
         }
         if ($this->container->getParameter('kernel.environment') === 'prod') {

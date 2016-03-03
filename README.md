@@ -17,6 +17,7 @@ Requirements
 
 * PHP 7.0
 * NodeJS 5.x
+* npm + jspm
 * MariaDB
 
 

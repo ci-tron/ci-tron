@@ -8,7 +8,7 @@ Feature: As an API user
       | Valanz   | val      | valanz@ci-tron.org |
 
   Scenario Outline: user registration
-    Given I prepare a POST request on "/registration"
+    Given I prepare a POST request on "/back/registration"
     And I specified the following request data:
       | username | <username>        |
       | password | <password>        |
@@ -28,7 +28,7 @@ Feature: As an API user
 
   Scenario: user trying to register while being connected
     Given I am logged with username "Valanz" and password "val"
-    And I prepare a POST request on "/registration"
+    And I prepare a POST request on "/back/registration"
     And I specified the following request data:
       | username | foo               |
       | password | bar               |

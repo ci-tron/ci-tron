@@ -49,8 +49,8 @@ gulp.task('watch.dev', function () {
     });
 });
 
-gulp.task('serve', ['build.js.dev', 'watch.dev'], function() {
-    connect.server({}, function () {
+function serve(env) {
+    connect.server({env: env}, function () {
         browserSync({
             proxy: '127.0.0.1:8000'
         });
@@ -58,10 +58,12 @@ gulp.task('serve', ['build.js.dev', 'watch.dev'], function() {
 
 
     gulp.watch([APP_DEST + '/**/*.js', 'src/**/*.php']).on('change', function () {
-        console.log('RELOAD§');
         browserSync.reload();
     });
-});
+}
+
+gulp.task('serve.dev', ['build.js.dev', 'watch.dev'], function () { serve('dev'); });
+gulp.task('serve.test', ['build.js.dev', 'watch.dev'], function () { serve('test'); });
 
 //gulp.task('default', ['connect']);
-gulp.task('default', ['serve']);
+gulp.task('default', ['serve.dev']);

@@ -10,7 +10,7 @@ default:
         CiTron\Behat\CiTronExtension: ~
         Knp\FriendlyContexts\Extension:
             api:
-                base_url: http://localhost:8000/
+                base_url: http://localhost:3000/
             entities:
                 namespaces:
                     - CiTron

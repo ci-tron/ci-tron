@@ -11,7 +11,7 @@ Feature:
 
 
   Scenario Outline: I login
-    Given I prepare a POST request on "/login"
+    Given I prepare a POST request on "/back/login"
     And I specified the following request data:
       | username | <username>        |
       | password | <password>        |

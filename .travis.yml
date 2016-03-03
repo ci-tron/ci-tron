@@ -6,13 +6,21 @@ branches:
     only:
         - master
 
+env:
+    global:
+        - secure: "ZkfTqUSoZHLZArMgLl28yO+YOQgCjhbEd/svVYwWqeiNuWtKGG74AoyF2k4qiw/aox+rAVH9RaBMUyT7KFcVg5TsBRm4BD3bf4wEXI2NyHi8EdcZ3rQlZAFLSDwbZ7/KNIjXzrJmz3RGwLJDLHo13/6o/l5zQCZVpXCpTPG8jNnDjcdtf5SWTB3HT+DXAanzhBwSbNZm1HRUKEvVt4EpDUx1POuM4ZTwBXAJqu1mz2UFW1DLkyk1F5J9LA/bi/mc/ilUJYtzzd6F0zbUdw5s9U1pfQrrBCWhYbKDOtjpiaR2lkVnPMfAI/+hJq/vbxu/Wr40E52fvPp+gGgf00nHZ8JJZaEMK8tYZpnFdOc4SZU0qPYxoPDnb+zBZo0jXi4YvTK3nFzlNtlnEl/+4uUYX9TL4oZYltqPFQaUToZDCW+r/jhRYtfyQAkxmOjRoykGEGjdvQv/WhQX2HapVP6W+3xQ4d6S0WB9YZGG58sHy7vCNXXqziq566tFT9OEpJ2P0Xqe+fsGYAFWYZ43sUMe1qF5aPXIWk6UiBi0dBplOZ5a2YMsSjAXQSGrquL6Rv+6xRIB0gmj7scChX5hQYqSkTEnVZblzTY+hxUm2a0cb+ewa/W3o6CjNtp1WPycL8kbxsCaq9J7cZdbgpdj8EU25IkmYI5LYaqsBVyuBMMKXEI="
+
 before_script:
+    - npm install -g gulp-cli
+    - npm install -g jspm
+    - jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN
     - composer install --prefer-source --dev
+    - npm install
     - php bin/console doctrine:database:create -e=test
     - php bin/console doctrine:schema:update --force -e=test
 
 script:
-    - php bin/console server:run -e=test &
-    - sleep 1
+    - gulp serve.test &
+    - sleep 5
     - ./bin/behat --format=progress
     - ./bin/phpspec run --format=pretty
