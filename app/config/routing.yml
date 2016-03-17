@@ -13,6 +13,11 @@ user:
     type: annotation
     prefix: /back
 
+project:
+    resource: '@CiTron/Project/Controller'
+    type: annotation
+    prefix: /back
+
 login_check:
     path: /back/login
     methods: [POST]

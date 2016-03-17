@@ -16,8 +16,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * Class User
- *
  * @ORM\Entity(repositoryClass="CiTron\Project\Repository\ProjectRepository")
  * @ORM\Table(name="project")
  *
@@ -63,7 +61,7 @@ class Project
     private $repository;
 
     /**
-     * @var string
+     * @var int
      *
      * @ORM\Column(name="visibility", type="integer")
      */
@@ -78,6 +76,7 @@ class Project
 
     public function __construct()
     {
+        $this->setVisibility(2);
     }
 
     /**
@@ -91,14 +90,14 @@ class Project
     /**
      * @return string
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
 
     /**
      * @param string $name
-     * @return $this
+     * @return Project
      */
     public function setName(string $name) : Project
     {
@@ -110,14 +109,14 @@ class Project
     /**
      * @return string
      */
-    public function getRepository()
+    public function getRepository() : string
     {
         return $this->repository;
     }
 
     /**
      * @param string $repository
-     * @return $this
+     * @return Project
      */
     public function setRepository(string $repository) : Project
     {
@@ -129,14 +128,14 @@ class Project
     /**
      * @return User
      */
-    public function getUser()
+    public function getUser() : User
     {
         return $this->user;
     }
 
     /**
-     * @param string $user
-     * @return $this
+     * @param User $user
+     * @return Project
      */
     public function setUser(User $user) : Project
     {
@@ -145,11 +144,18 @@ class Project
         return $this;
     }
 
-    public function getVisibility()
+    /**
+     * @return int
+     */
+    public function getVisibility() : int
     {
         return $this->visibility;
     }
 
+    /**
+     * @param bool $visibility
+     * @return Project
+     */
     public function setVisibility(bool $visibility) : Project
     {
         $this->visibility = $visibility;

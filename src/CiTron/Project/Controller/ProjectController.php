@@ -42,7 +42,7 @@ class ProjectController extends Controller
 
         $project = new Project();
 
-    	$form = $this->createNamedForm('', ProjectType::class, $project);
+        $form = $this->createNamedForm('', ProjectType::class, $project);
         $form->handleRequest($request);
 
         if (!$form->isValid()) {
@@ -72,7 +72,6 @@ class ProjectController extends Controller
      * @Route("/secured/users/{slug}/projects.json", name="user_projects")
      * @Route("/users/{slug}/projects.json", name="public_user_projects")
      * @Method({"GET"})
-     * @Security("is_granted('read', project)")
      */
     public function getProjectsAction(User $user)
     {

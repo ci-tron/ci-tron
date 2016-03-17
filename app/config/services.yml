@@ -6,23 +6,4 @@ parameters:
 imports:
     - { resource: services/api/listeners.yml }
     - { resource: services/user/listeners.yml }
-
-
-services:
-    app.project.repository:
-        class: 'CiTron\Project\Repository\ProjectRepository'
-        arguments: ['CiTron\Project\Entity\Project']
-        factory: ['@doctrine.orm.entity_manager', 'getRepository']
-
-    app.project.voter:
-        class: CiTron\Project\Security\ProjectVoter
-        tags:
-            - { name: security.voter }
-        public: false
-
-    app.project.param_converter:
-        class: 'CiTron\Project\Request\ParamConverter\ProjectParamConverter'
-        arguments:
-            - '@app.project.repository'
-        tags:
-            - { name: 'request.param_converter', priority: 1 }
+    - { resource: '@CiTron/Project/Resources/services.yml' }

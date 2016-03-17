@@ -21,7 +21,7 @@ class ProjectVoter extends Voter
     const DELETE = 'delete';
     const EDIT   = 'edit';
     const READ   = 'read';
-    const WRITE   = 'write';
+    const WRITE  = 'write';
 
     protected function supports($attribute, $subject) : bool
     {
@@ -53,7 +53,7 @@ class ProjectVoter extends Voter
                 return $this->canRead($subject, $user);
         }
 
-        throw new \LogicException('This attribute does not exist');
+        return false;
     }
 
     /**

@@ -51,7 +51,6 @@ class FeatureContext extends FriendlyContext implements Context, SnippetAcceptin
     public function gatherContexts(\Behat\Behat\Hook\Scope\BeforeScenarioScope $scope)
     {
         $environment = $scope->getEnvironment();
-        $this->apiContext = $environment->getContext('Knp\FriendlyContexts\Context\ApiContext');
     }
 
     /**
@@ -149,76 +148,5 @@ class FeatureContext extends FriendlyContext implements Context, SnippetAcceptin
     public function resetSession()
     {
         $this->container->get('citron.guzzle.array_cookie_jar')->remove(null, '/');
-    }
-
-    /**
-     * @Then /^the creation response should contains the following json:?$/
-     */
-    public function theCreationResponseShouldContainsJson($jsonData)
-    {
-        if (!is_object($jsonData)) {
-            throw new \InvalidArgumentException('Invalid json data');
-        }
-
-        $this->theResponseShouldContainsJson($jsonData, ['id' => 0]);
-    }
-
-    /**
-     * @Then /^the generated response should contains the following json:?$/
-     */
-    public function theResponseShouldContainsJson($jsonData, $generatedValues = [])
-    {
-        if (!is_object($jsonData)) {
-            throw new \InvalidArgumentException('Invalid json data');
-        }
-
-        $response = $this->apiContext->getResponse();
-
-        $json = false;
-
-        if ($jsonData instanceof PyStringNode) {
-            $json = json_decode($jsonData->getRaw(), true);
-        } elseif ($jsonData instanceof TableNode) {
-            $json = $jsonData->getRowsHash();
-        } elseif ($jsonData instanceof \stdClass || true === is_array($jsonData)) {
-            $json = $jsonData;
-        }
-
-        if (false === $json) {
-            throw new \InvalidArgumentException(sprintf(
-                'Invalid json data class ("%s")',
-                get_class($jsonData)
-            ));
-        }
-
-        $result = $response->json();
-
-        if (!empty($generatedValues)) {
-            array_walk_recursive($result, [$this, 'changeGeneratedValues'], $generatedValues);
-        }
-
-        $expected = json_encode($json);
-        $real     = json_encode($result);
-
-        $this->getAsserter()->assertEquals(
-            $expected,
-            $real,
-            sprintf("The given json\r\n\r\n%s\r\nis not equal to the expected\r\n\r\n%s",
-                $real,
-                $expected
-            )
-        );
-    }
-
-    /**
-     * @param $element
-     * @param $key
-     * @param $generatedValues
-     */
-    private function changeGeneratedValues(&$element, $key, $generatedValues)
-    {
-        if (array_key_exists($key, $generatedValues)) {
-            $element = $generatedValues[$key];
-        }
     }
 }
