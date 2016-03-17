@@ -17,3 +17,31 @@ Requirements
 
 * PHP 7.0
 * NodeJS 5.x
+* npm + jspm
+* MariaDB
+
+
+How to install
+--------------
+
+**For now this is only for development purpose ! DO NOT USE IT IN PRODUCTION, IT'S NOT READY YET.**
+
+```
+composer install
+npm install
+
+php bin/console doctrine:database:create
+php bin/console doctrine:schema:create
+php bin/console doctrine:fixtures:load -n
+```
+
+
+How to run
+----------
+
+### in a development environment
+
+```
+npm start
+```
+

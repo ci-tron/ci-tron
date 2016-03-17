@@ -1,0 +1,24 @@
+standard:
+    resource: '@CiTron/Controller/DefaultController.php'
+    type: annotation
+    prefix: /back
+
+user:
+    resource: '@CiTron/User/Controller'
+    type: annotation
+    prefix: /back
+
+login_check:
+    path: /back/login
+    methods: [POST]
+
+logout:
+    path: /back/logout
+    methods: [GET]
+
+front:
+    path: /{anything}
+    defaults: { _controller: 'CiTron:Default:front' }
+    methods: GET
+    requirements:
+        anything: .*

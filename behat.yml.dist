@@ -1,0 +1,16 @@
+default:
+    suites:
+        default:
+            path: %paths.base%/features
+            contexts:
+                - Knp\FriendlyContexts\Context\ApiContext
+                - Knp\FriendlyContexts\Context\EntityContext
+                - CiTron\Behat\FeatureContext
+    extensions:
+        CiTron\Behat\CiTronExtension: ~
+        Knp\FriendlyContexts\Extension:
+            api:
+                base_url: http://localhost:3000/
+            entities:
+                namespaces:
+                    - CiTron
