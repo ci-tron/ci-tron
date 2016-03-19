@@ -1,3 +1,4 @@
+///<reference path="../../web/jspm_packages/npm/angular2@2.0.0-beta.10/typings/browser.d.ts"/>
 // Angular2 requirements. Needed because of systemjs.
 import 'zone.js';
 import 'reflect-metadata';

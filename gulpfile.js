@@ -27,8 +27,7 @@ gulp.task('clean.dev', function () {
 
 gulp.task('build.js.dev', ['clean.dev'], function () {
     gulp.src([
-            './' + APP_DIR + '/**/*.ts',
-            'typings/browser.d.ts'
+            './' + APP_DIR + '/**/*.ts'
         ])
         .pipe(ts(TS_CONFIG))
         .pipe(gulp.dest('./' + APP_DEST));
