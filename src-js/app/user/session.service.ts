@@ -10,12 +10,12 @@ export class Session {
 
     constructor (private http: Http) {}
 
-    init() : Promise {
+    init() : Promise<Session> {
         if (this.active !== null) {
-            return new Promise((resolve, reject) => { resolve(this); });
+            return new Promise<Session>((resolve, reject) => { resolve(this); });
         }
 
-        return new Promise((resolve, reject) => {
+        return new Promise<Session>((resolve, reject) => {
             this.renew().subscribe((res:Response) => {
                 this.active = res.status === 200;
                 resolve(this);

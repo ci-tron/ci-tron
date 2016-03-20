@@ -16,6 +16,12 @@ logout:
     path: /back/logout
     methods: [GET]
 
+front_js_404:
+    path: /{anything}.js
+    defaults: { _controller: 'CiTron:Default:notFound' }
+    requirements:
+        anything: .*
+
 front:
     path: /{anything}
     defaults: { _controller: 'CiTron:Default:front' }

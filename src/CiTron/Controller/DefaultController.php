@@ -39,4 +39,9 @@ class DefaultController extends Controller
 
         throw new \Exception ('This part is not done for now: there is code to write.');
     }
+
+    public function notFoundAction()
+    {
+        throw $this->createNotFoundException('JS File not found. (And you should not create .js URIs with the front app !)');
+    }
 }
