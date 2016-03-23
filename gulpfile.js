@@ -39,7 +39,7 @@ gulp.task('watch.dev', function () {
         compileToFile = compileToFile.substring(0, compileToFile.length -2) + 'js';
 
         if (context.type === 'changed' || context.type === 'added') {
-            gulp.src(context.path)
+            gulp.src(['./' + APP_DIR + '/**/*.ts'])
                 .pipe(ts(TS_CONFIG))
                 .pipe(gulp.dest(path.dirname(compileToFile)));
 

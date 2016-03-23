@@ -31,8 +31,8 @@
     "karma-jasmine": "^0.3.7",
     "lite-server": "^2.0.1",
     "opn": "^1.0.0",
-    "typescript": "^1.7.5",
-    "typings": "^0.6.8"
+    "typescript": "^1.8.9",
+    "typings": "^0.7.9"
   },
   "jspm": {
     "directories": {
