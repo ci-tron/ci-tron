@@ -16,6 +16,8 @@ use CiTron\User\Entity\User;
 use JMS\Serializer\SerializationContext;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 class ProfileController extends Controller
 {
@@ -48,5 +50,29 @@ class ProfileController extends Controller
             'json',
             SerializationContext::create()->setGroups(['current'])
         );
+    }
+
+    /**
+     * This action allows the user to delete its own account. It's secured by a csrf token.
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     *
+     * @Route("secured/users/me/delete", name="user_deletion")
+     * @Method({"DELETE"})
+     */
+    public function deleteAccountAction(Request $request)
+    {
+        $csrfManager = $this->get('security.csrf.token_manager');
+
+        if ($csrfManager->isTokenValid(new CsrfToken('delete-me', $request->get('csrf_token')))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($this->getUser());
+            $entityManager->flush();
+
+            return $this->successResponse('You was successfully removed from our database.');
+        }
+
+        return $this->errorResponse('Your session expired, please try again.', 401);
     }
 }

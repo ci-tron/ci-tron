@@ -3,6 +3,11 @@ standard:
     type: annotation
     prefix: /back
 
+security:
+    resource: '@CiTron/Controller/SecurityController.php'
+    type: annotation
+    prefix: /back/security
+
 user:
     resource: '@CiTron/User/Controller'
     type: annotation
