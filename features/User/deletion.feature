@@ -6,8 +6,8 @@ Feature: delete an account
 
   Background:
     Given the following users:
-      | username | password |
-      | Nek      | nek      |
+      | username | password | roles     |
+      | Nek      | nek      | ROLE_USER |
 
   Scenario: I delete my account
     Given I am logged with username "Nek" and password "nek"
@@ -15,5 +15,4 @@ Feature: delete an account
     When I prepare a DELETE request on "/back/secured/users/me/delete"
     And I use the last CSRF token
     And I send the request
-    And print last response
     Then I should receive a 200 response
