@@ -36,12 +36,11 @@ gulp.task('build.js.dev', ['clean.dev'], function () {
 gulp.task('watch.dev', function () {
     gulp.watch([APP_DIR + '/**/*.ts'], function (context) {
         var compileToFile = context.path.replace(__dirname + '/' + APP_DIR, APP_DEST);
-        compileToFile = compileToFile.substring(0, compileToFile.length -2) + 'js';
 
         if (context.type === 'changed' || context.type === 'added') {
             gulp.src(['./' + APP_DIR + '/**/*.ts'])
                 .pipe(ts(TS_CONFIG))
-                .pipe(gulp.dest(path.dirname(compileToFile)));
+                .pipe(gulp.dest('./' + APP_DEST));
 
         } else if (context.type === 'deleted') {
             fs.unlinkSync(compileToFile);
@@ -51,6 +50,12 @@ gulp.task('watch.dev', function () {
 
         console.info('File ' + context.path  + ' was ' + context.type);
     });
+
+    gulp.watch([APP_DEST + '/**/*.js', 'src/**/*.php'], function (context) {
+        if (context.type === 'changed') {
+            browserSync.reload();
+        }
+    });
 });
 
 function serve(env) {
@@ -59,15 +64,9 @@ function serve(env) {
             proxy: '127.0.0.1:8000'
         });
     });
-
-
-    gulp.watch([APP_DEST + '/**/*.js', 'src/**/*.php']).on('change', function () {
-        browserSync.reload();
-    });
 }
 
 gulp.task('serve.dev', ['build.js.dev', 'watch.dev'], function () { serve('dev'); });
 gulp.task('serve.test', ['build.js.dev', 'watch.dev'], function () { serve('test'); });
 
-//gulp.task('default', ['connect']);
 gulp.task('default', ['serve.dev']);

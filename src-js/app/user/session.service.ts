@@ -1,5 +1,5 @@
 import { Injectable } from 'angular2/core';
-import {Http, Response} from 'angular2/http';
+import {Http, Response, Headers, RequestOptions} from 'angular2/http';
 import {Observable}     from 'rxjs/Observable';
 import {Message} from "../standard/messages";
 
@@ -11,6 +11,7 @@ export class Session {
     constructor (private http: Http) {}
 
     init() : Promise<Session> {
+
         if (this.active !== null) {
             return new Promise<Session>((resolve, reject) => { resolve(this); });
         }
@@ -29,6 +30,14 @@ export class Session {
 
     renew() {
         return this.http.get('/back/login-status.json').catch(this.handleError);
+    }
+
+    login(username, password) {
+        console.log('hello');
+        let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post('/back/login', 'username=' + username + '&password=' + password, options);
     }
 
     private handleError (error: Response) {
