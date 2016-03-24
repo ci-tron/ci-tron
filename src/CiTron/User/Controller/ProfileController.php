@@ -70,6 +70,9 @@ class ProfileController extends Controller
             $entityManager->remove($this->getUser());
             $entityManager->flush();
 
+            $this->get('security.token_storage')->setToken(null);
+            $this->get('session')->invalidate();
+
             return $this->successResponse('You was successfully removed from our database.');
         }
 
