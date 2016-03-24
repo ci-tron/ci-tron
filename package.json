@@ -9,13 +9,13 @@
   "license": "MIT",
   "dependencies": {
     "fs-extra": "^0.26.5",
-    "angular2": "2.0.0-beta.11",
-    "systemjs": "0.19.22",
+    "angular2": "2.0.0-beta.12",
+    "systemjs": "0.19.24",
     "es6-promise": "^3.0.2",
     "es6-shim": "^0.35.0",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
-    "zone.js": "0.6.4"
+    "zone.js": "0.6.6"
   },
   "devDependencies": {
     "bin-version-check": "^2.1.0",
@@ -39,12 +39,12 @@
       "baseURL": "web"
     },
     "dependencies": {
-      "angular2": "npm:angular2@^2.0.0-beta.11",
+      "angular2": "npm:angular2@^2.0.0-beta.1A",
       "es6-promise": "npm:es6-promise@^3.0.2",
       "es6-shim": "github:es-shims/es6-shim@^0.35.0",
       "reflect-metadata": "npm:reflect-metadata@0.1.2",
       "rxjs": "npm:rxjs@5.0.0-beta.2",
-      "zone.js": "npm:zone.js@0.6.4"
+      "zone.js": "npm:zone.js@0.6.6"
     },
     "devDependencies": {}
   }
