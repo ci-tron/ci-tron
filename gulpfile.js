@@ -31,6 +31,9 @@ gulp.task('build.js.dev', ['clean.dev'], function () {
         ])
         .pipe(ts(TS_CONFIG))
         .pipe(gulp.dest('./' + APP_DEST));
+
+    gulp.src(['./' + APP_DIR + '/**/*.html'])
+        .pipe(gulp.dest('./' + APP_DEST));
 });
 
 gulp.task('watch.dev', function () {
@@ -41,6 +44,7 @@ gulp.task('watch.dev', function () {
             gulp.src(['./' + APP_DIR + '/**/*.ts'])
                 .pipe(ts(TS_CONFIG))
                 .pipe(gulp.dest('./' + APP_DEST));
+            browserSync.reload();
 
         } else if (context.type === 'deleted') {
             fs.unlinkSync(compileToFile);
@@ -49,6 +53,11 @@ gulp.task('watch.dev', function () {
         }
 
         console.info('File ' + context.path  + ' was ' + context.type);
+    });
+
+    gulp.watch([APP_DIR + '/**/*.html'], function () {
+        gulp.src(['./' + APP_DIR + '/**/*.html'])
+            .pipe(gulp.dest('./' + APP_DEST));
     });
 
     gulp.watch([APP_DEST + '/**/*.js', 'src/**/*.php'], function (context) {

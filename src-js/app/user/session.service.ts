@@ -33,7 +33,6 @@ export class Session {
     }
 
     login(username, password) {
-        console.log('hello');
         let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
         let options = new RequestOptions({ headers: headers });
 
