@@ -34,6 +34,11 @@ class ProjectParamConverter implements ParamConverterInterface
         $this->projectRepository = $projectRepository;
     }
 
+    /**
+     * @param Request $request
+     * @param ParamConverter $configuration
+     * @return bool
+     */
     public function apply(Request $request, ParamConverter $configuration)
     {
         $parameter = 'projectSlug';
@@ -55,6 +60,10 @@ class ProjectParamConverter implements ParamConverterInterface
         return true;
     }
 
+    /**
+     * @param ParamConverter $configuration
+     * @return bool
+     */
     public function supports(ParamConverter $configuration)
     {
 

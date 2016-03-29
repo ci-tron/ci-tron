@@ -28,11 +28,20 @@ class LoginController extends Controller
      */
     public function statusAction()
     {
+        $errorMessage = 'Not logged';
+
         if ($this->getUser() !== null) {
             return $this->successResponse('Successfully logged.');
         }
 
-        return $this->errorResponse('Not logged.', 401);
+        $authenticationUtils = $this->get('security.authentication_utils');
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        if (null !== $error) {
+            $errorMessage = $error->getMessage();
+        }
+
+        return $this->errorResponse($errorMessage, 401);
     }
 
     /**

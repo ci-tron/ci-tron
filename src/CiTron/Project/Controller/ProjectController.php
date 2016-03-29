@@ -22,6 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 class ProjectController extends Controller
 {
@@ -36,7 +37,7 @@ class ProjectController extends Controller
     {
         if (!$this->getUser()) {
             return new JsonResponse([
-                'errors' => 'Unauthorized action',
+                'error' => 'Unauthorized action',
             ], 401);
         }
 
@@ -47,22 +48,18 @@ class ProjectController extends Controller
 
         if (!$form->isValid()) {
             return new JsonResponse([
-                'errors' => $this->getFormErrors($form),
+                'error' => $this->getFormErrors($form),
             ], 400);
         }
 
         $project->setUser($this->getUser());
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($project);
-        $entityManager->flush();
+        $this->persistAndFlush($project);
 
-        return new JsonResponse([
-            'project' => [
-                'id'   => $project->getId(),
-                'name' => $project->getName(),
-            ],
-        ], 200);
+        return [
+            'id'   => $project->getId(),
+            'slug' => $project->getSlug(),
+        ];
     }
 
     /**
@@ -94,19 +91,7 @@ class ProjectController extends Controller
             return $this->errorResponse('No project found', 404);
         }
 
-        $list = [];
-
-        foreach ($projects as $project) {
-            $list[] = $this->get('jms_serializer')->serialize(
-                $project,
-                'json',
-                SerializationContext::create()->setGroups(['standard'])
-            );
-        }
-
-        return new JsonResponse([
-            'projects' => $list,
-        ]);
+        return $projects;
     }
 
     /**
@@ -120,11 +105,7 @@ class ProjectController extends Controller
      */
     public function getProjectAction(Project $project)
     {
-        return $this->get('jms_serializer')->serialize(
-            $project,
-            'json',
-            SerializationContext::create()->setGroups(['standard'])
-        );
+        return $project;
     }
 
     /**
@@ -135,13 +116,19 @@ class ProjectController extends Controller
      * @Method({"DELETE"})
      * @Security("is_granted('delete', project)")
      */
-    public function deleteProjectAction(Project $project)
+    public function deleteProjectAction(Request $request, Project $project)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->remove($project);
-        $entityManager->flush();
+        $csrfManager = $this->get('security.csrf.token_manager');
 
-        return $this->successResponse('Project deleted');
+        if ($csrfManager->isTokenValid(new CsrfToken('delete-project', $request->get('csrf_token')))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($project);
+            $entityManager->flush();
+
+            return $this->successResponse('Project deleted');
+        }
+
+        return $this->errorResponse('Your session expired, please try again.', 401);
     }
 
     /**
@@ -159,18 +146,16 @@ class ProjectController extends Controller
 
         if (!$form->isValid()) {
             return new JsonResponse([
-                'errors' => $this->getFormErrors($form),
+                'error' => $this->getFormErrors($form),
             ], 400);
         }
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
 
-        return new JsonResponse([
-            'project' => [
-                'id'   => $project->getId(),
-                'name' => $project->getName(),
-            ],
-        ], 200);
+        return [
+            'id'   => $project->getId(),
+            'slug' => $project->getSlug(),
+        ];
     }
 }

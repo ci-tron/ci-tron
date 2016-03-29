@@ -23,6 +23,10 @@ use JMS\Serializer\Annotation as JMS;
  */
 class Project
 {
+    const VISIBILITY_PUBLIC = 2;
+    const VISIBILITY_RESTRICTED = 1;
+    const VISIBILITY_PRIVATE = 0;
+
     /**
      * @var int
      *
@@ -35,11 +39,11 @@ class Project
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=255, unique=false)
+     * @ORM\Column(name="name", type="string", length=255, unique=false)
      * @JMS\Groups({"standard", "current"})
      * @JMS\Expose
      */
-    private $name;
+    private $name = '';
 
     /**
      * @var string
@@ -58,7 +62,7 @@ class Project
      * @JMS\Groups({"standard", "current"})
      * @JMS\Expose
      */
-    private $repository;
+    private $repository = '';
 
     /**
      * @var int
@@ -76,7 +80,7 @@ class Project
 
     public function __construct()
     {
-        $this->setVisibility(2);
+        $this->setVisibility(self::VISIBILITY_PRIVATE);
     }
 
     /**
@@ -153,13 +157,21 @@ class Project
     }
 
     /**
-     * @param bool $visibility
+     * @param int $visibility
      * @return Project
      */
-    public function setVisibility(bool $visibility) : Project
+    public function setVisibility(int $visibility) : Project
     {
         $this->visibility = $visibility;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

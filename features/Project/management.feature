@@ -4,12 +4,12 @@ Feature: Project management
 
   Background:
     Given the following users:
-      | username | password | email              | roles       |
-      | nek      | nek      | nek@ci-tron.org    | ROLE_USER   |
-      | valanz   | valanz   | valanz@ci-tron.org | ROLE_USER   |
+      | username | password | slug   | email              | roles       |
+      | nek      | nek      | nek    | nek@ci-tron.org    | ROLE_USER   |
+      | valanz   | valanz   | valanz | valanz@ci-tron.org | ROLE_USER   |
     And the following projects:
       | name           | visibility | repository               | user   |
-      | azerty         | 2          | github.com/valanz/yolo   | nek    |
+      | yolo           | 2          | github.com/nek/yolo      | nek    |
       | random-project | 1          | github.com/valanz/random | valanz |
 
   Scenario: project creation
@@ -24,10 +24,8 @@ Feature: Project management
     And the creation response should contains the following json:
       """
         {
-            "project": {
-                "id": "{int}",
-                "name": "foobar"
-            }
+          "id": 0,
+          "slug": "foobar"
         }
       """
 
@@ -35,7 +33,7 @@ Feature: Project management
     Given I am logged with username "nek" and password "nek"
     And I prepare a POST request on "back/secured/users/nek/projects/yolo/edit"
     And I specified the following request body:
-      | name       | baz            |
+      | name       | foobaz         |
       | repository | http://foo.baz |
       | visibility | 2              |
     When I send the request
@@ -43,16 +41,14 @@ Feature: Project management
     And the creation response should contains the following json:
       """
         {
-            "project": {
-                "id": "{int}",
-                "name": "foobar"
-            }
+          "id": 0,
+          "slug": "foobaz"
         }
       """
 
   Scenario: Trying to edit project I don't own
     Given I am logged with username "nek" and password "nek"
-    And I prepare a POST request on "back/secured/users/nek/projects/random-project/edit"
+    And I prepare a POST request on "back/secured/users/valanz/projects/random-project/edit"
     And I specified the following request body:
       | name       | baz            |
       | repository | http://foo.baz |
@@ -61,85 +57,75 @@ Feature: Project management
     Then I should receive a 403 response
 
   Scenario: get the current user projects
-    Given I am logged with username "nek" and password "Nek"
+    Given I am logged with username "nek" and password "nek"
     And I prepare a GET request on "back/secured/users/nek/projects.json"
     When I send the request
     Then I should receive a 200 response
-    And the creation response should contains the following json:
+    And the response should contains the following json:
       """
-        {
-            "projects": {[
-                "id": "{int}",
-                "name": "foobar"
-            ]}
-        }
+        [
+          {
+            "name": "yolo",
+            "slug": "yolo",
+            "repository": "github.com/nek/yolo"
+          }
+        ]
       """
 
   Scenario: get a specific project for the current user
-    Given I am logged with username "nek" and password "Nek"
-    And I prepare a GET request on "back/secured/users/nek/projects/foobar.json"
+    Given I am logged with username "nek" and password "nek"
+    And I prepare a GET request on "back/secured/users/nek/projects/yolo.json"
     When I send the request
     Then I should receive a 200 response
-    And the creation response should contains the following json:
+    And the response should contains the following json:
       """
         {
-            "project": {
-                "id": "{int}",
-                "name": "foobar"
-            }
+          "name": "yolo",
+          "slug": "yolo",
+          "repository": "github.com/nek/yolo"
         }
       """
 
   Scenario: get projects for a given user
-    Given I am logged with username "nek" and password "Nek"
+    Given I am logged with username "nek" and password "nek"
     And I prepare a GET request on "back/secured/users/valanz/projects.json"
     When I send the request
     Then I should receive a 200 response
-    And the creation response should contains the following json:
+    And the response should contains the following json:
       """
-        {
-            "projects": {[
-                "id": "{int}",
-                "name": "yolo"
-            ]}
-        }
+        [
+          {
+            "name": "random-project",
+            "slug": "random-project",
+            "repository": "github.com/valanz/random"
+          }
+        ]
       """
 
   Scenario: get a specific project for a given user
-    Given I am logged with username "nek" and password "Nek"
-    And I prepare a GET request on "back/secured/users/valanz/projects/yolo.json"
+    Given I am logged with username "nek" and password "nek"
+    And I prepare a GET request on "back/secured/users/valanz/projects/random-project.json"
     When I send the request
     Then I should receive a 200 response
-    And the creation response should contains the following json:
+    And the response should contains the following json:
       """
         {
-            "project": {
-                "id": "{int}",
-                "name": "foobar"
-            }
+          "name": "random-project",
+          "slug": "random-project",
+          "repository": "github.com/valanz/random"
         }
       """
 
   Scenario: project deletion
     Given I am logged with username "nek" and password "nek"
-    And I prepare a DELETE request on "back/secured/projects/foobar/delete"
-    When I send the request
+    And retrieve a CSRF token for "delete-project"
+    When I prepare a DELETE request on "back/secured/users/nek/projects/yolo/delete"
+    And I use the last CSRF token
+    And I send the request
     Then I should receive a 200 response
-    And the creation response should contains the following json:
-      """
-        {
-            "success": "The project has been deleted"
-        }
-      """
 
   Scenario: Trying to delete a project user don't own
     Given I am logged with username "nek" and password "nek"
-    And I prepare a DELETE request on "back/secured/projects/valanz/delete"
+    And I prepare a DELETE request on "back/secured/users/nek/projects/random-project/delete"
     When I send the request
     Then I should receive a 403 response
-    And the creation response should contains the following json:
-      """
-        {
-            "error": "You can't delete that project"
-        }
-      """
