@@ -14,6 +14,7 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use CiTron\Behat\Exception\ResponseException;
 use GuzzleHttp\Exception\BadResponseException;
 use Knp\FriendlyContexts\Context\Context as FriendlyContext;
 
@@ -26,6 +27,11 @@ class FeatureContext extends FriendlyContext implements Context, SnippetAcceptin
      * @var \Knp\FriendlyContexts\Context\ApiContext
      */
     private $apiContext;
+
+    /**
+     * @var string
+     */
+    private $csrfToken;
 
     /**
      * Initializes context.
@@ -66,14 +72,49 @@ class FeatureContext extends FriendlyContext implements Context, SnippetAcceptin
         }
 
         if (200 !== $response->getStatusCode()) {
-            throw new \Exception(sprintf(
-                "The login failed with, status code %s and content:\n%s",
-                $response->getStatusCode(),
-                (string) $response->getBody()
-            ));
+            throw new ResponseException($response);
         }
     }
 
+    /**
+     * @Given retrieve a CSRF token for :arg1
+     */
+    public function retrieveACsrfTokenFor($arg1)
+    {
+        try {
+            $response = $this
+                ->getRequestBuilder()
+                ->setMethod('GET')
+                ->setUri('/back/security/csrf/' . $arg1 . '.json')
+                ->build()
+                ->send()
+            ;
+        } catch (BadResponseException $e) {
+            $response = $e->getResponse();
+        }
+
+        if (200 !== $response->getStatusCode()) {
+            throw new ResponseException($response);
+        }
+
+        $body = json_decode((string) $response->getBody(), true);
+        if (false !== $body) {
+            if (empty($body['token'])) {
+                throw new \Exception('The token is empty.');
+            }
+            $this->csrfToken = $body['token'];
+        }
+    }
+
+    /**
+     * @When I use the last CSRF token
+     */
+    public function iUseTheLastCsrfToken()
+    {
+        $queries = $this->getRequestBuilder()->getQueries() ?: [];
+        $queries['csrf_token'] = $this->csrfToken;
+        $this->getRequestBuilder()->setQueries($queries);
+    }
 
     /**
      * @When print last response
