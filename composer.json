@@ -39,6 +39,7 @@
         "behat/behat": "~3.0@dev",
         "behat/mink-extension": "2.1.x-dev",
         "behat/mink-goutte-driver": "^1.2",
+        "behat/mink-selenium2-driver":  "^1.3",
         "knplabs/friendly-contexts": "dev-sf3",
         "behat/mink-browserkit-driver":  "~1.3@dev",
         "behat/mink": "~1.7@dev",

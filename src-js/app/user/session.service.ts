@@ -6,7 +6,7 @@ import {Message} from "../standard/messages";
 @Injectable()
 export class Session {
 
-    private active:boolean;
+    private active:boolean = null;
 
     constructor (private http: Http) {}
 
@@ -29,7 +29,7 @@ export class Session {
     }
 
     renew() {
-        return this.http.get('/back/login-status.json').catch(this.handleError);
+        return this.http.get('/back/login-status.json');
     }
 
     login(username, password) {
@@ -37,6 +37,15 @@ export class Session {
         let options = new RequestOptions({ headers: headers });
 
         return this.http.post('/back/login', 'username=' + username + '&password=' + password, options);
+    }
+
+    logout() {
+        return new Promise<Session>((resolve, reject) => {
+            this.http.get('/back/logout').subscribe((res:Response) => {
+                this.active = false;
+                resolve(this);
+            }, reject);
+        })
     }
 
     private handleError (error: Response) {

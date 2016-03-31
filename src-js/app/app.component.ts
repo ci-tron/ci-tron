@@ -8,7 +8,10 @@ import {SecurityComponent} from "./user/security.component";
     providers: [HTTP_PROVIDERS, Session],
     directives:  [SecurityComponent],
     template: `
-    <h1 *ngIf="logged">I\'m ci-tron !</h1>
+    <div *ngIf="logged">
+        <h1 >I'm ci-tron !</h1>
+        <p><a href="#" (click)="onLogout()">logout</a></p>
+    </div>
     <login *ngIf="!logged" (updateUserStatus)="updateUserStatus($event)"></login>
     `
 })
@@ -19,8 +22,17 @@ export class AppComponent implements OnInit {
 
     constructor(private session:Session) {}
 
-    updateUserStatus(foo) {
-        this.logged = true;
+    updateUserStatus(log) {
+        this.logged = log;
+    }
+
+    onLogout() {
+        this.session.logout().then(
+            (session:Session) => this.logged = session.isActive(),
+            (error) => console.error(error)
+        );
+
+        return false;
     }
 
     ngOnInit() {

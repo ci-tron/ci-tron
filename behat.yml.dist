@@ -1,16 +1,31 @@
 default:
     suites:
         default:
-            path: %paths.base%/features
+            path: "%paths.base%/features"
             contexts:
                 - Knp\FriendlyContexts\Context\ApiContext
                 - Knp\FriendlyContexts\Context\EntityContext
                 - CiTron\Behat\FeatureContext
+                - CiTron\Behat\CiTronMinkContext
     extensions:
         CiTron\Behat\CiTronExtension: ~
+
+        Behat\MinkExtension\ServiceContainer\MinkExtension:
+            base_url: http://127.0.0.1:3000/
+
+            selenium2: ~
+
+            # You should set it to true on your local config
+            # but it can block the test suite so it's set to false here.
+            show_auto: false
+
+            # Usefull when you use the "And show last response" step
+            # You can change it to `firefox %s` or maybe `google_chrome %s`
+            show_cmd: firefox %s
+
         Knp\FriendlyContexts\Extension:
             api:
-                base_url: http://localhost:3000/
+                base_url: http://127.0.0.1:3000/
             entities:
                 namespaces:
                     - CiTron

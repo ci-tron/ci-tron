@@ -9,12 +9,26 @@ branches:
 env:
     global:
         - secure: "ZkfTqUSoZHLZArMgLl28yO+YOQgCjhbEd/svVYwWqeiNuWtKGG74AoyF2k4qiw/aox+rAVH9RaBMUyT7KFcVg5TsBRm4BD3bf4wEXI2NyHi8EdcZ3rQlZAFLSDwbZ7/KNIjXzrJmz3RGwLJDLHo13/6o/l5zQCZVpXCpTPG8jNnDjcdtf5SWTB3HT+DXAanzhBwSbNZm1HRUKEvVt4EpDUx1POuM4ZTwBXAJqu1mz2UFW1DLkyk1F5J9LA/bi/mc/ilUJYtzzd6F0zbUdw5s9U1pfQrrBCWhYbKDOtjpiaR2lkVnPMfAI/+hJq/vbxu/Wr40E52fvPp+gGgf00nHZ8JJZaEMK8tYZpnFdOc4SZU0qPYxoPDnb+zBZo0jXi4YvTK3nFzlNtlnEl/+4uUYX9TL4oZYltqPFQaUToZDCW+r/jhRYtfyQAkxmOjRoykGEGjdvQv/WhQX2HapVP6W+3xQ4d6S0WB9YZGG58sHy7vCNXXqziq566tFT9OEpJ2P0Xqe+fsGYAFWYZ43sUMe1qF5aPXIWk6UiBi0dBplOZ5a2YMsSjAXQSGrquL6Rv+6xRIB0gmj7scChX5hQYqSkTEnVZblzTY+hxUm2a0cb+ewa/W3o6CjNtp1WPycL8kbxsCaq9J7cZdbgpdj8EU25IkmYI5LYaqsBVyuBMMKXEI="
+addons:
+    firefox: "44.0"
+
+before_script:
+    - "sh -e /etc/init.d/xvfb start"
+    - sleep 3 # give some time to xvfb to start
 
 before_install:
+    - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16 -extension RANDR"
     - nvm install 4.3.1
     - nvm use 4.3.1
     - node --version
     - npm --version
+    - firefox --version
+
+    # This part is for making selenium work
+    - "export DISPLAY=:99"
+    - wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
+    - java -jar selenium-server-standalone-2.53.0.jar & # > /dev/null 2> /dev/null &
+    - sleep 5
 
 install:
     - npm install -g gulp-cli
