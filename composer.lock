@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "79b6a76cb385d5ed53fb24db911586f6",
-    "content-hash": "d8cbce3adefcb36267331287795fd05b",
+    "hash": "94705f3ab458fe765eb07c3182354c8d",
+    "content-hash": "7decee291120c321cffb4680767d2adc",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2905,6 +2905,66 @@
                 "webdriver"
             ],
             "time": "2016-03-05 09:10:18"
+        },
+        {
+            "name": "behat/symfony2-extension",
+            "version": "2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Behat/Symfony2Extension.git",
+                "reference": "cb9ff0ff2f1a901379616d95cc701601d139160c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Behat/Symfony2Extension/zipball/cb9ff0ff2f1a901379616d95cc701601d139160c",
+                "reference": "cb9ff0ff2f1a901379616d95cc701601d139160c",
+                "shasum": ""
+            },
+            "require": {
+                "behat/behat": "~3.0,>=3.0.4",
+                "php": ">=5.3.3",
+                "symfony/framework-bundle": "~2.0|~3.0"
+            },
+            "require-dev": {
+                "behat/mink-browserkit-driver": "~1.0",
+                "behat/mink-extension": "~2.0",
+                "phpspec/phpspec": "~2.0",
+                "phpunit/phpunit": "~4.0",
+                "symfony/symfony": "~2.1|~3.0"
+            },
+            "type": "behat-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Behat\\Symfony2Extension": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christophe Coevoet",
+                    "email": "stof@notk.org"
+                },
+                {
+                    "name": "Konstantin Kudryashov",
+                    "email": "ever.zet@gmail.com"
+                }
+            ],
+            "description": "Symfony2 framework extension for Behat",
+            "homepage": "http://behat.org",
+            "keywords": [
+                "BDD",
+                "framework",
+                "symfony"
+            ],
+            "time": "2016-01-13 17:06:48"
         },
         {
             "name": "fabpot/goutte",

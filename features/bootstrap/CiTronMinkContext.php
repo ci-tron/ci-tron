@@ -46,15 +46,13 @@ class CiTronMinkContext extends MinkContext
      * @return bool
      * @throws \Exception
      */
-    public function spin ($lambda, array $args = [], int $wait = 10)
+    public function spin ($lambda, array $args = [], int $wait = 5)
     {
         if (!is_string($lambda) && !is_callable($lambda)) {
             throw new \InvalidArgumentException(
                 sprintf('The spin method needs a string of parent method or a callable. "%s" given.', gettype($lambda))
             );
         }
-
-
 
         for ($i = 1; $i <= $wait; $i++)
         {

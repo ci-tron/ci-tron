@@ -7,6 +7,7 @@ default:
                 - Knp\FriendlyContexts\Context\EntityContext
                 - CiTron\Behat\FeatureContext
                 - CiTron\Behat\CiTronMinkContext
+                - CiTron\Behat\DebugContext
     extensions:
         CiTron\Behat\CiTronExtension: ~
 
