@@ -1,12 +1,16 @@
 import {Component, OnInit} from 'angular2/core';
 import {HTTP_PROVIDERS}    from 'angular2/http';
 import {Session} from "./user/session.service";
-import {SecurityComponent} from "./user/security.component";
+import {LoginComponent} from "./user/security.component";
 
+
+/**
+ * This component is the top/root component.
+ */
 @Component({
     selector: 'my-app',
     providers: [HTTP_PROVIDERS, Session],
-    directives:  [SecurityComponent],
+    directives:  [LoginComponent],
     template: `
     <div *ngIf="logged">
         <h1 >I'm ci-tron !</h1>
@@ -15,13 +19,16 @@ import {SecurityComponent} from "./user/security.component";
     <login *ngIf="!logged" (updateUserStatus)="updateUserStatus($event)"></login>
     `
 })
-
 export class AppComponent implements OnInit {
 
     logged:boolean = null;
 
     constructor(private session:Session) {}
 
+    /**
+     * This method is called by the LoginComponent on user update status.
+     * @param log This is a boolean saying if yes or not the user is logged.
+     */
     updateUserStatus(log) {
         this.logged = log;
     }
@@ -35,6 +42,10 @@ export class AppComponent implements OnInit {
         return false;
     }
 
+    /**
+     * On root component init we should get the user status.
+     * As login is managed with cookies it's possible the user is already connected.
+     */
     ngOnInit() {
         this.session.init().then(
             (session:Session) => this.logged = session.isActive(),

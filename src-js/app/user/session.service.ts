@@ -1,8 +1,9 @@
 import { Injectable } from 'angular2/core';
 import {Http, Response, Headers, RequestOptions} from 'angular2/http';
-import {Observable}     from 'rxjs/Observable';
-import {Message} from "../standard/messages";
 
+/**
+ * The session class manage all request related to user status on the back.
+ */
 @Injectable()
 export class Session {
 
@@ -46,12 +47,5 @@ export class Session {
                 resolve(this);
             }, reject);
         })
-    }
-
-    private handleError (error: Response) {
-        // in a real world app, we may send the error to some remote logging infrastructure
-        // instead of just logging it to the console
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
     }
 }

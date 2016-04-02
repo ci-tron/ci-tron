@@ -7,7 +7,7 @@ import {Session} from "../user/session.service";
     providers: [Session],
     templateUrl: 'app/templates/user/login.html'
 })
-export class SecurityComponent {
+export class LoginComponent {
     @Output() updateUserStatus = new EventEmitter();
 
     username:string = '';
