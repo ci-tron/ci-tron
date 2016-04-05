@@ -83,19 +83,12 @@ class CiTronMinkContext extends MinkContext
     
     private function runLambda($lambda, array $args) : bool
     {
-        $evalArgs = [];
-        foreach($args as $i => $arg) {
-            $varName = 'EvalArg'.$i;
-            $evalArgs[] = '$' . $varName;
-            $$varName = $arg;
-        }
         $args[] = $this;
-
         if (is_string($lambda)) {
-            $res = eval('parent::$lambda('.implode(',', $evalArgs).');');
-        } else {
-            $res = call_user_func_array($lambda, $args);
+            $lambda = 'parent::' . $lambda;
         }
+
+        $res = call_user_func_array($lambda, $args);
 
         if ($res === true || $res === null) {
             return true;
