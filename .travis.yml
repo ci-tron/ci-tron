@@ -9,12 +9,28 @@ branches:
 env:
     global:
         - secure: "ZkfTqUSoZHLZArMgLl28yO+YOQgCjhbEd/svVYwWqeiNuWtKGG74AoyF2k4qiw/aox+rAVH9RaBMUyT7KFcVg5TsBRm4BD3bf4wEXI2NyHi8EdcZ3rQlZAFLSDwbZ7/KNIjXzrJmz3RGwLJDLHo13/6o/l5zQCZVpXCpTPG8jNnDjcdtf5SWTB3HT+DXAanzhBwSbNZm1HRUKEvVt4EpDUx1POuM4ZTwBXAJqu1mz2UFW1DLkyk1F5J9LA/bi/mc/ilUJYtzzd6F0zbUdw5s9U1pfQrrBCWhYbKDOtjpiaR2lkVnPMfAI/+hJq/vbxu/Wr40E52fvPp+gGgf00nHZ8JJZaEMK8tYZpnFdOc4SZU0qPYxoPDnb+zBZo0jXi4YvTK3nFzlNtlnEl/+4uUYX9TL4oZYltqPFQaUToZDCW+r/jhRYtfyQAkxmOjRoykGEGjdvQv/WhQX2HapVP6W+3xQ4d6S0WB9YZGG58sHy7vCNXXqziq566tFT9OEpJ2P0Xqe+fsGYAFWYZ43sUMe1qF5aPXIWk6UiBi0dBplOZ5a2YMsSjAXQSGrquL6Rv+6xRIB0gmj7scChX5hQYqSkTEnVZblzTY+hxUm2a0cb+ewa/W3o6CjNtp1WPycL8kbxsCaq9J7cZdbgpdj8EU25IkmYI5LYaqsBVyuBMMKXEI="
+    matrix:
+        - secure: "GTS2CzFjVj/S9H2ni3rL50rsN3p9pF9rs3bAKIRd+AJeSS5VZ8j88wqIUYcZIED02fXeyYuqwQgak/LnMZra+d35qXoWzM3oYtB1v/cPU3jVrQ+4jc1jHKHTA9dMotqjgmAo1kr8LxjHQKjGVdgdt9YziKXwhcNV0ulkgpoMbmwBgx7+SFJClHtI8Z8dNW6/yojpp0Zl0iwJ8bmZZbjDyJPpKYEKyO9at5OdBahi0A+UitDCK+2kSmw8V4Uhtaos+I4YUOZNoCMpvN3v5urkRavUIoyo+H253GSrWAfD8tcSwHTPAwfVFGTYta4k+VPubm6zbzk+YieI68EYlwq8CFn6IN34J/9va8WJa8fW3d+8bImYAuv9jm/RbzkzA3Tk6g493MkQlfLcjbaLvoKQxeSuG5413EjxKTVAY7hgHShzTrgyJhcxOnyUJJiRLeR4rd4u23RYRfBHqLwmAiw6SzpaCvYoLJM/9l4PxPuzMgTeHDgNFtMtflKd43hcMXO+PlepZwthmn25+SSMTaPgDBm4PpFtp+j6byXadr6vxSZ/gwR/RldLd5Zh+23p0iRTI3KkKJ6ybuOODkjPopADpX9fEZT2Wj6+SZldcFEQzRLxrGfj5WqsSmPytAqRDarKAPudzBgY8tNtUaGs2PWKJdlGuHh4+MTVj/+2bJ8EMko="
+
+before_script:
+    - "sh -e /etc/init.d/xvfb start"
+    - sleep 3 # give some time to xvfb to start
 
 before_install:
+    - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16 -extension RANDR"
     - nvm install 4.3.1
     - nvm use 4.3.1
     - node --version
     - npm --version
+    - sudo apt-get update
+    - sudo apt-get install firefox
+    - firefox --version
+
+    # This part is for making selenium work
+    - "export DISPLAY=:99"
+    - wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar
+    - java -jar selenium-server-standalone-2.53.0.jar > /dev/null 2> /dev/null &
+    - sleep 5
 
 install:
     - npm install -g gulp-cli
