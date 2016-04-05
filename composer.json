@@ -31,7 +31,9 @@
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "nekland/tools": "dev-master",
         "gedmo/doctrine-extensions": "~2.4",
-        "stof/doctrine-extensions-bundle": "dev-master"
+        "stof/doctrine-extensions-bundle": "dev-master",
+        "voryx/thruway": "dev-ratchet-0.4",
+        "cboden/ratchet": "0.4.x-dev"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
