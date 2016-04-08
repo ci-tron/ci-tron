@@ -8,9 +8,9 @@ Feature: Project management
       | nek      | nek      | nek    | nek@ci-tron.org    | ROLE_USER   |
       | valanz   | valanz   | valanz | valanz@ci-tron.org | ROLE_USER   |
     And the following projects:
-      | name           | visibility | repository               | user   |
-      | yolo           | 2          | github.com/nek/yolo      | nek    |
-      | random-project | 1          | github.com/valanz/random | valanz |
+      | id | name           | visibility | repository               | user   |
+      | 1  | yolo           | 2          | github.com/nek/yolo      | nek    |
+      | 2  | random-project | 1          | github.com/valanz/random | valanz |
 
   Scenario: project creation
     Given I am logged with username "nek" and password "nek"
@@ -41,7 +41,7 @@ Feature: Project management
     And the creation response should contains the following json:
       """
         {
-          "id": 0,
+          "id": 1,
           "slug": "foobaz"
         }
       """
