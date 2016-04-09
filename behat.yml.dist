@@ -4,7 +4,7 @@ default:
             path: "%paths.base%/features"
             contexts:
                 - Knp\FriendlyContexts\Context\ApiContext
-                - Knp\FriendlyContexts\Context\EntityContext
+                - CiTron\Behat\CitronEntityContext
                 - CiTron\Behat\FeatureContext
                 - CiTron\Behat\CiTronMinkContext
                 - CiTron\Behat\DebugContext
