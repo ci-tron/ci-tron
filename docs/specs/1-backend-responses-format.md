@@ -86,8 +86,8 @@ to consider for the future. Nevermind we follow our rules and here they are.
 
 ### 1. On success but nothing more needed
 
-Response code: 200
-Example of response content:
+* Response code: 200
+* Example of response content:
 
 ```json
 {
@@ -97,8 +97,8 @@ Example of response content:
 
 ### 2. On error
 
-Response code could be many depending on the error: 500, 400, 403...
-Example of response content:
+* Response code could be many depending on the error: 500, 400, 403...
+* Example of response content:
 
 ```json
 // When there is only one error
@@ -115,8 +115,8 @@ Example of response content:
 
 ### 3. Getting data
 
-Response code: 200
-The content will be an object representing the resource you asked:
+* Response code: 200
+* The content will be an object representing the resource you asked:
 
 ```json
 {
@@ -128,8 +128,8 @@ The content will be an object representing the resource you asked:
 ### 4. Getting many data
 
 
-Response code: 200
-The content will be an array of object representing a resource:
+* Response code: 200
+* The content will be an array of object representing a resource:
 
 ```json
 [
