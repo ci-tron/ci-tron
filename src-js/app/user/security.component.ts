@@ -8,7 +8,7 @@
  */
 import {Component, Input, Output, EventEmitter} from 'angular2/core';
 import {Session} from "../user/session.service";
-
+import {Router} from "angular2/router";
 
 @Component({
     selector: 'login',
@@ -22,11 +22,16 @@ export class LoginComponent {
     password:string = '';
     error:string = null;
 
-    constructor(private session:Session) {}
+    constructor(
+        private _router: Router,
+        private session:Session
+    ) {}
 
     onSubmit() {
         this.session.login(this.username, this.password).subscribe(() => {
             this.updateUserStatus.emit(true);
+
+            this._router.navigate(['Home']);
         }, (error) => {
             if (error.status === 401) {
                 this.error = 'Bad credentials';

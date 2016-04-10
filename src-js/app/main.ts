@@ -14,7 +14,11 @@ import 'zone.js/dist/zone';
 import 'zone.js/dist/long-stack-trace-zone';
 import 'reflect-metadata';
 
+import {Component, provide} from 'angular2/core';
 import {bootstrap}    from 'angular2/platform/browser'
 import {AppComponent} from './app.component'
+import {ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig, APP_BASE_HREF} from 'angular2/router';
 
-bootstrap(AppComponent);
+bootstrap(AppComponent, [
+    provide(APP_BASE_HREF, {useValue: '/'})
+]);

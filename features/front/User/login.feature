@@ -12,7 +12,8 @@ Feature:
 
   Scenario Outline: I login
     Given I am on the homepage
-    And I should see "Login"
+    And I follow "Login"
+    Then I should see "Login form"
     And I fill in the following:
       | Username | <username> |
       | Password | <password> |

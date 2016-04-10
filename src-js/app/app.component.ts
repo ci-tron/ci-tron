@@ -10,6 +10,9 @@ import {Component, OnInit} from 'angular2/core';
 import {HTTP_PROVIDERS}    from 'angular2/http';
 import {Session} from "./user/session.service";
 import {LoginComponent} from "./user/security.component";
+import {RegistrationComponent} from "./user/registration.component";
+import {RouteConfig, ROUTER_PROVIDERS, ROUTER_DIRECTIVES} from 'angular2/router';
+import {HomeComponent} from "./user/home.component";
 
 
 /**
@@ -17,16 +20,29 @@ import {LoginComponent} from "./user/security.component";
  */
 @Component({
     selector: 'my-app',
-    providers: [HTTP_PROVIDERS, Session],
-    directives:  [LoginComponent],
+    providers: [HTTP_PROVIDERS, Session, ROUTER_PROVIDERS],
+    directives:  [LoginComponent, ROUTER_DIRECTIVES],
     template: `
-    <div *ngIf="logged">
-        <h1 >I'm ci-tron !</h1>
-        <p><a href="#" (click)="onLogout()">logout</a></p>
-    </div>
-    <login *ngIf="!logged" (updateUserStatus)="updateUserStatus($event)"></login>
+
+        <h1>ci-tron</h1>
+        <nav>
+            <a [routerLink]="['Registration']">Registration</a>
+            <a [routerLink]="['Login']">Login</a>
+        </nav>
+
+        <router-outlet></router-outlet>
     `
 })
+@RouteConfig([
+    {
+        path: '/registration/...',
+        name: 'Registration',
+        component: RegistrationComponent,
+        useAsDefault: true
+    },
+    { path: '/login', name: 'Login', component: LoginComponent },
+    { path: '/home', name: 'Home', component: HomeComponent }
+])
 export class AppComponent implements OnInit {
 
     logged:boolean = null;
