@@ -70,7 +70,7 @@ Content-Length: 56
 **This is *not* what we do at ci-tron !**
 
 As we follow http everywhere, we also follow the standardized way to
-transfert data: `form-urlencoded`. And if you transfert a file you can use
+transfer data: `form-urlencoded`. And if you transfert a file you can use
 `multipart/form-data` that are handle by any browser natively.
 
 So a ci-tron request looks more like this:
