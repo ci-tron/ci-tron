@@ -4,6 +4,14 @@ Backend response format
 Ci-tron backend must be homogeneous in their response. That's why it's time
 to write how responses must be build.
 
+[I. Http must be respected](#i-http-must-be-respected)
+
+[II. Json responses need json http headers](#ii-json-responses-need-json-http-headers)
+
+[III. Queries are http form-data queries](#iii-queries-are-http-form-data-queries)
+
+[IV. Format of common json responses in ci-tron](#iv-format-of-common-json-responses-in-ci-tron)
+
 I. Http must be respected
 -------------------------
 
