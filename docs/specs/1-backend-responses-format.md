@@ -43,7 +43,7 @@ So when you render a response in the context of ci-tron. It must be a json
 one.
 
 This means that you almost never have to use the `Response` class of
-Symfony but you should prefere the `JsonResponse` class of ci-tron.
+Symfony but you should prefere the [`JsonResponse`](https://github.com/ci-tron/ci-tron/blob/master/src%2FCiTron%2FSymfony%2FHttpFoundation%2FJsonResponse.php) class of ci-tron.
 
 Finally, here is the header that we use:
 
