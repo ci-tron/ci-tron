@@ -28,7 +28,7 @@ class CitronEntityContext extends EntityContext
 
         if ($this->hasTags([ 'reset-schema', '~not-reset-schema' ])) {
             $purger = new ORMPurger($this->get('doctrine')->getManager());
-            $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
+            $purger->setPurgeMode(ORMPurger::PURGE_MODE_DELETE);
 
             $purger->purge();
         }

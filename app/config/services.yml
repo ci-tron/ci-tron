@@ -6,4 +6,4 @@ parameters:
 imports:
     - { resource: services/api/listeners.yml }
     - { resource: services/user/listeners.yml }
-    - { resource: '@CiTron/Project/Resources/services.yml' }
+    - { resource: services/project/services.yml }

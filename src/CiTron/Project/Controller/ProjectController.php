@@ -150,8 +150,7 @@ class ProjectController extends Controller
             ], 400);
         }
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->flush();
+        $this->persistAndFlush($project);
 
         return [
             'id'   => $project->getId(),

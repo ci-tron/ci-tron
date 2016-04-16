@@ -21,10 +21,10 @@ Feature: Project management
       | visibility | 1              |
     When I send the request
     Then I should receive a 200 response
-    And the creation response should contains the following json:
+    And the response should contains the following json:
       """
         {
-          "id": 0,
+          "id": 3,
           "slug": "foobar"
         }
       """
@@ -38,7 +38,7 @@ Feature: Project management
       | visibility | 2              |
     When I send the request
     Then I should receive a 200 response
-    And the creation response should contains the following json:
+    And the response should contains the following json:
       """
         {
           "id": 1,
