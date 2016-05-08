@@ -27,10 +27,14 @@ class CitronEntityContext extends EntityContext
         $this->storeTags($event);
 
         if ($this->hasTags([ 'reset-schema', '~not-reset-schema' ])) {
-            $purger = new ORMPurger($this->get('doctrine')->getManager());
-            $purger->setPurgeMode(ORMPurger::PURGE_MODE_DELETE);
+            $em = $this->get('doctrine')->getManager();
+            $em->getConnection()->executeUpdate("SET FOREIGN_KEY_CHECKS=0;");
 
+            $purger = new ORMPurger($em);
+            $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
             $purger->purge();
+
+            $em->getConnection()->executeUpdate("SET FOREIGN_KEY_CHECKS=1;");
         }
     }
 }
