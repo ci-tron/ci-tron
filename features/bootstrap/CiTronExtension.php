@@ -33,7 +33,8 @@ class CiTronExtension implements ExtensionInterface
      */
     public function process(ContainerBuilder $container)
     {
-        // Nothing to do for now.
+        $hydratorDefinition = $container->getDefinition('friendly.entity.hydrator');
+        $hydratorDefinition->setClass('CiTron\Behat\FriendlyContext\Doctrine\EntityHydrator');
     }
 
     /**

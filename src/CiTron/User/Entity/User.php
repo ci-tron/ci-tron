@@ -11,6 +11,7 @@
 namespace CiTron\User\Entity;
 
 
+use CiTron\Project\Entity\Project;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Nekland\Tools\EqualableInterface;
@@ -108,6 +109,13 @@ class User implements UserInterface, EqualableInterface
     private $roles;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="CiTron\Project\Entity\Project", mappedBy="user", cascade={"remove"})
+     */
+    private $projects;
+
+    /**
      * User constructor.
      *
      * @param string $salt
@@ -119,7 +127,8 @@ class User implements UserInterface, EqualableInterface
         } else {
             $this->salt = $salt;
         }
-        $this->roles = [];
+
+        $this->roles = [User::ROLE_USER];
     }
 
     /**
@@ -285,6 +294,48 @@ class User implements UserInterface, EqualableInterface
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Project[]
+     */
+    public function getProject()
+    {
+        return $this->projects;
+    }
+
+    /**
+     * @param Project $project
+     * @return User
+     */
+    public function addProject(Project $project)
+    {
+        $project->setUser($this);
+        $this->projects[] = $project;
+
+        return $this;
+    }
+
+    /**
+     * @param Project[] $projects
+     * @return User
+     */
+    public function setProjects(array $projects)
+    {
+        $this->projects = $projects;
+
+        return $this;
+    }
+
+    /**
+     * @param Project $project
+     * @return $this
+     */
+    public function removeProject(Project $project)
+    {
+        $this->projects->removeElement($project);
 
         return $this;
     }

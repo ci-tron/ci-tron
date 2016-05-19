@@ -10,9 +10,9 @@
 
 namespace CiTron\Controller;
 
+use CiTron\Symfony\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class Controller
@@ -77,5 +77,19 @@ class Controller extends BaseController
 
 
         return $stringErrors;
+    }
+
+    /**
+     * @param object[] objects The object(s) to persist
+     */
+    protected function persistAndFlush(...$objects)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        foreach ($objects as $object) {
+            $em->persist($object);
+        }
+
+        $em->flush();
     }
 }

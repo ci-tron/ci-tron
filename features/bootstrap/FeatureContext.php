@@ -14,6 +14,7 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
+use Guzzle\Http\Exception\ClientErrorResponseException;
 use CiTron\Behat\Exception\ResponseException;
 use GuzzleHttp\Exception\BadResponseException;
 use Knp\FriendlyContexts\Context\Context as FriendlyContext;
@@ -50,7 +51,6 @@ class FeatureContext extends FriendlyContext implements Context, SnippetAcceptin
     public function gatherContexts(\Behat\Behat\Hook\Scope\BeforeScenarioScope $scope)
     {
         $environment = $scope->getEnvironment();
-        $this->apiContext = $environment->getContext('Knp\FriendlyContexts\Context\ApiContext');
     }
 
     /**
@@ -67,7 +67,7 @@ class FeatureContext extends FriendlyContext implements Context, SnippetAcceptin
                 ->build()
                 ->send()
             ;
-        } catch (BadResponseException $e) {
+        } catch (ClientErrorResponseException $e) {
             $response = $e->getResponse();
         }
 

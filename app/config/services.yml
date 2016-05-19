@@ -6,9 +6,4 @@ parameters:
 imports:
     - { resource: services/api/listeners.yml }
     - { resource: services/user/listeners.yml }
-
-
-services:
-#    service_name:
-#        class: CiTron\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    - { resource: services/project/services.yml }
