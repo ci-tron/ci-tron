@@ -75,6 +75,7 @@ class Project
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="CiTron\User\Entity\User", inversedBy="projects")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $user;
 
