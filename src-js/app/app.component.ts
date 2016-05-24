@@ -10,23 +10,42 @@ import {Component, OnInit} from 'angular2/core';
 import {HTTP_PROVIDERS}    from 'angular2/http';
 import {Session} from "./user/session.service";
 import {LoginComponent} from "./user/security.component";
-
+import {ProjectComponent} from "./project/project.component";
+import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from "angular2/router";
+import {DashboardComponent} from "./project/dashboard.component.ts";
+import {ProjectDetailComponent} from "./project/projectDetail.component";
 
 /**
  * This component is the top/root component.
  */
 @Component({
     selector: 'my-app',
-    providers: [HTTP_PROVIDERS, Session],
-    directives:  [LoginComponent],
+    providers: [HTTP_PROVIDERS, Session, ROUTER_PROVIDERS],
+    directives:  [LoginComponent, ROUTER_DIRECTIVES],
     template: `
     <div *ngIf="logged">
         <h1 >I'm ci-tron !</h1>
+        <p><a [routerLink]="['Dashboard']">Projects</a></p>
         <p><a href="#" (click)="onLogout()">logout</a></p>
+
+        <router-outlet></router-outlet>
     </div>
     <login *ngIf="!logged" (updateUserStatus)="updateUserStatus($event)"></login>
     `
 })
+@RouteConfig([,
+    {
+        path: '/projects/:slug',
+        name: 'Project',
+        component: ProjectDetailComponent
+    },
+    {
+        path: '/',
+        name: 'Dashboard',
+        component: DashboardComponent,
+        useAsDefault: true
+    },
+])
 export class AppComponent implements OnInit {
 
     logged:boolean = null;
