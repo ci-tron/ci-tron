@@ -67,7 +67,8 @@ Feature: Project management
           {
             "name": "yolo",
             "slug": "yolo",
-            "repository": "github.com/nek/yolo"
+            "repository": "github.com/nek/yolo",
+            "configuration": []
           }
         ]
       """
@@ -82,7 +83,8 @@ Feature: Project management
         {
           "name": "yolo",
           "slug": "yolo",
-          "repository": "github.com/nek/yolo"
+          "repository": "github.com/nek/yolo",
+          "configuration": []
         }
       """
 
@@ -97,7 +99,8 @@ Feature: Project management
           {
             "name": "random-project",
             "slug": "random-project",
-            "repository": "github.com/valanz/random"
+            "repository": "github.com/valanz/random",
+            "configuration": []
           }
         ]
       """
@@ -112,7 +115,47 @@ Feature: Project management
         {
           "name": "random-project",
           "slug": "random-project",
-          "repository": "github.com/valanz/random"
+          "repository": "github.com/valanz/random",
+          "configuration": []
+        }
+      """
+
+  Scenario: define configuration for a given project
+    Given I am logged with username "nek" and password "nek"
+    And I prepare a POST request on "back/secured/users/nek/projects/yolo/config/edit"
+    And I specified the following request body:
+      | language          | PHP                                  |
+      | envVars           | FOO=bar                              |
+      | preparationScript | git clone git:github.com/foo/bar.git |
+      | launchScript      | bin/console server:run               |
+      | VCS               | github                               |
+    When I send the request
+    Then I should receive a 200 response
+    And the response should contains the following json:
+      """
+        {
+          "id": 1,
+          "slug": "yolo",
+          "configuration": {
+            "language": "PHP",
+            "env_vars": "FOO=bar",
+            "preparation_script": "git clone git:github.com/foo/bar.git",
+            "launch_script": "bin/console server:run",
+            "_v_c_s": "github"
+          }
+        }
+      """
+    And I prepare a GET request on "back/secured/users/nek/projects/yolo/config.json"
+    When I send the request
+    Then I should receive a 200 response
+    And the response should contains the following json:
+      """
+        {
+          "language": "PHP",
+          "env_vars": "FOO=bar",
+          "preparation_script": "git clone git:github.com/foo/bar.git",
+          "launch_script": "bin/console server:run",
+          "_v_c_s": "github"
         }
       """
 

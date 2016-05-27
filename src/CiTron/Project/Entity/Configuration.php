@@ -1,0 +1,148 @@
+<?php
+/**
+ * This file is a part of ci-tron package.
+ *
+ * (c) Ci-tron <dev@ci-tron.org>
+ *
+ * For the full license, take a look to the LICENSE file
+ * on the root directory of this project
+ */
+
+namespace CiTron\Project\Entity;
+
+use CiTron\Symfony\Entity\ImmutableObject;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Embeddable
+ */
+class Configuration extends ImmutableObject
+{
+    const LANGUAGES = [
+        'PHP',
+        'javascript',
+    ];
+
+    const VCS = [
+        'github',
+        'bitbucket',
+    ];
+
+    /**
+     * @var string
+     * @ORM\Column(name="language", type="string", length=255, nullable=true)
+     */
+    protected $language;
+
+    /**
+     * @var string
+     * @ORM\Column(name="envVars", type="string", length=255, nullable=true)
+     */
+    protected $envVars;
+
+    /**
+     * @var string
+     * @ORM\Column(name="preparationScript", type="string", length=255, nullable=true)
+     */
+    protected $preparationScript;
+
+    /**
+     * @var string
+     * @ORM\Column(name="launchScript", type="string", length=255, nullable=true)
+     */
+    protected $launchScript;
+
+    /**
+     * @var string
+     * @ORM\Column(name="vcs", type="string", length=255, nullable=true)
+     */
+    protected $VCS;
+
+    /**
+     * @return Configuration
+     */
+    static public function create()
+    {
+        return new Configuration();
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnvVars()
+    {
+        return $this->envVars;
+    }
+
+    /**
+     * @param string $envVars
+     */
+    public function setEnvVars($envVars)
+    {
+        $this->envVars = $envVars;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPreparationScript()
+    {
+        return $this->preparationScript;
+    }
+
+    /**
+     * @param string $preparationScript
+     */
+    public function setPreparationScript($preparationScript)
+    {
+        $this->preparationScript = $preparationScript;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLaunchScript()
+    {
+        return $this->launchScript;
+    }
+
+    /**
+     * @param string $launchScript
+     */
+    public function setLaunchScript($launchScript)
+    {
+        $this->launchScript = $launchScript;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVCS()
+    {
+        return $this->VCS;
+    }
+
+    /**
+     * @param string $VCS
+     */
+    public function setVCS($VCS)
+    {
+        $this->VCS = $VCS;
+    }
+}

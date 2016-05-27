@@ -13,6 +13,7 @@ namespace CiTron\Project\Controller;
 
 use CiTron\Controller\Controller;
 use CiTron\Project\Entity\Project;
+use CiTron\Project\Form\ConfigurationType;
 use CiTron\Project\Form\ProjectType;
 use CiTron\Symfony\HttpFoundation\JsonResponse;
 use CiTron\User\Entity\User;
@@ -155,6 +156,53 @@ class ProjectController extends Controller
         return [
             'id'   => $project->getId(),
             'slug' => $project->getSlug(),
+        ];
+    }
+
+    /**
+     * @param Project $project
+     * @return JsonResponse
+     *
+     * @Route("/secured/users/{slug}/projects/{projectSlug}/config.json", name="user_project_configuration")
+     * @Method({"GET"})
+     * @Security("is_granted('edit', project)")
+     */
+    public function getProjectConfigurationAction(Request $request, Project $project)
+    {
+        return $project->getConfiguration();
+    }
+
+    /**
+     * @param Project $project
+     * @return JsonResponse
+     *
+     * @Route("/secured/users/{slug}/projects/{projectSlug}/config/edit", name="user_project_configuration_edition")
+     * @Method({"POST"})
+     * @Security("is_granted('edit', project)")
+     */
+    public function editProjectConfigurationAction(Request $request, Project $project)
+    {
+        $configurationFactory = $this->get('app.project.configuration.factory');
+
+        $configuration = $configurationFactory->create();
+
+        $form = $this->createNamedForm('', ConfigurationType::class, $configuration);
+        $form->handleRequest($request);
+
+        if (!$form->isValid()) {
+            return new JsonResponse([
+                'error' => $this->getFormErrors($form),
+            ], 400);
+        }
+
+        $project->setConfiguration($configuration);
+
+        $this->persistAndFlush($project);
+
+        return [
+            'id'   => $project->getId(),
+            'slug' => $project->getSlug(),
+            'configuration' => $project->getConfiguration(),
         ];
     }
 }

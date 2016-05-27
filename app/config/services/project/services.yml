@@ -16,3 +16,6 @@ services:
             - '@app.project.repository'
         tags:
             - { name: 'request.param_converter', priority: 1 }
+
+    app.project.configuration.factory:
+        class: 'CiTron\Project\Factory\ConfigurationFactory'
