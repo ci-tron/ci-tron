@@ -11,6 +11,7 @@
 namespace CiTron\Project\Form;
 
 use CiTron\Project\Entity\Configuration;
+use CiTron\Project\Form\DataTransformer\ArrayToJsonDataTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,13 +25,18 @@ class ConfigurationType extends AbstractType
             ->add('language', ChoiceType::class, [
                 'choices' => Configuration::LANGUAGES
             ])
-            ->add('envVars')
-            ->add('preparationScript')
-            ->add('launchScript')
+            ->add('envVars', null, ['required' => false])
+            ->add('preparationScript', null, ['required' => false])
+            ->add('launchScript', null, ['required' => false])
             ->add('VCS', ChoiceType::class, [
-                'choices' => Configuration::VCS
+                'choices' => Configuration::VCS,
+                'required' => 'false',
             ])
         ;
+
+        $builder->get('envVars')->addModelTransformer(new ArrayToJsonDataTransformer());
+        $builder->get('preparationScript')->addModelTransformer(new ArrayToJsonDataTransformer());
+        $builder->get('launchScript')->addModelTransformer(new ArrayToJsonDataTransformer());
     }
 
     public function configureOptions(OptionsResolver $resolver)

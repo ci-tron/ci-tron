@@ -68,7 +68,7 @@ Feature: Project management
             "name": "yolo",
             "slug": "yolo",
             "repository": "github.com/nek/yolo",
-            "configuration": []
+            "configuration": {"env_vars":[],"preparation_script":[],"launch_script":[]}
           }
         ]
       """
@@ -84,7 +84,7 @@ Feature: Project management
           "name": "yolo",
           "slug": "yolo",
           "repository": "github.com/nek/yolo",
-          "configuration": []
+          "configuration": {"env_vars":[],"preparation_script":[],"launch_script":[]}
         }
       """
 
@@ -100,7 +100,7 @@ Feature: Project management
             "name": "random-project",
             "slug": "random-project",
             "repository": "github.com/valanz/random",
-            "configuration": []
+            "configuration": {"env_vars":[],"preparation_script":[],"launch_script":[]}
           }
         ]
       """
@@ -116,7 +116,7 @@ Feature: Project management
           "name": "random-project",
           "slug": "random-project",
           "repository": "github.com/valanz/random",
-          "configuration": []
+          "configuration": {"env_vars":[],"preparation_script":[],"launch_script":[]}
         }
       """
 
@@ -124,11 +124,14 @@ Feature: Project management
     Given I am logged with username "nek" and password "nek"
     And I prepare a POST request on "back/secured/users/nek/projects/yolo/config/edit"
     And I specified the following request body:
-      | language          | PHP                                  |
-      | envVars           | FOO=bar                              |
-      | preparationScript | git clone git:github.com/foo/bar.git |
-      | launchScript      | bin/console server:run               |
-      | VCS               | github                               |
+      | language             | PHP                                  |
+      | envVars[0]           | FOO=bar                              |
+      | envVars[1]           | ALPHA=bravo                          |
+      | preparationScript[0] | git clone git:github.com/foo/bar.git |
+      | preparationScript[1] | composer install                     |
+      | preparationScript[2] | bin/console do:da:cr                 |
+      | launchScript[0]      | bin/console server:run               |
+      | VCS                  | github                               |
     When I send the request
     Then I should receive a 200 response
     And the response should contains the following json:
@@ -138,9 +141,9 @@ Feature: Project management
           "slug": "yolo",
           "configuration": {
             "language": "PHP",
-            "env_vars": "FOO=bar",
-            "preparation_script": "git clone git:github.com/foo/bar.git",
-            "launch_script": "bin/console server:run",
+            "env_vars": "[\"FOO=bar\",\"ALPHA=bravo\"]",
+            "preparation_script": "[\"git clone git:github.com\\\/foo\\\/bar.git\",\"composer install\",\"bin\\\/console do:da:cr\"]",
+            "launch_script": "[\"bin\\\/console server:run\"]",
             "_v_c_s": "github"
           }
         }
@@ -152,9 +155,9 @@ Feature: Project management
       """
         {
           "language": "PHP",
-          "env_vars": "FOO=bar",
-          "preparation_script": "git clone git:github.com/foo/bar.git",
-          "launch_script": "bin/console server:run",
+          "env_vars": "[\"FOO=bar\",\"ALPHA=bravo\"]",
+          "preparation_script": "[\"git clone git:github.com\\\/foo\\\/bar.git\",\"composer install\",\"bin\\\/console do:da:cr\"]",
+          "launch_script": "[\"bin\\\/console server:run\"]",
           "_v_c_s": "github"
         }
       """

@@ -36,19 +36,19 @@ class Configuration extends ImmutableObject
 
     /**
      * @var string
-     * @ORM\Column(name="envVars", type="string", length=255, nullable=true)
+     * @ORM\Column(name="envVars", type="json_array", nullable=true)
      */
     protected $envVars;
 
     /**
      * @var string
-     * @ORM\Column(name="preparationScript", type="string", length=255, nullable=true)
+     * @ORM\Column(name="preparationScript", type="json_array", nullable=true)
      */
     protected $preparationScript;
 
     /**
      * @var string
-     * @ORM\Column(name="launchScript", type="string", length=255, nullable=true)
+     * @ORM\Column(name="launchScript", type="json_array", nullable=true)
      */
     protected $launchScript;
 
