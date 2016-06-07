@@ -1,3 +1,5 @@
 services:
     app.project.factory.configuration:
         class: 'CiTron\Project\Factory\ConfigurationFactory'
+    app.project.factory.commit:
+        class: 'CiTron\Project\Factory\CommitFactory'
