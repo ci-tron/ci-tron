@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Configuration extends ImmutableObject
 {
     const LANGUAGES = [
-        'PHP',
+        'php',
         'javascript',
     ];
 
@@ -61,13 +61,13 @@ class Configuration extends ImmutableObject
     /**
      * @return Configuration
      */
-    static public function create()
+    static public function create() : Configuration
     {
         return new Configuration();
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getLanguage()
     {
@@ -83,7 +83,7 @@ class Configuration extends ImmutableObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getEnvVars()
     {
@@ -99,7 +99,7 @@ class Configuration extends ImmutableObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getPreparationScript()
     {
@@ -115,7 +115,7 @@ class Configuration extends ImmutableObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getLaunchScript()
     {
@@ -131,7 +131,7 @@ class Configuration extends ImmutableObject
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getVCS()
     {

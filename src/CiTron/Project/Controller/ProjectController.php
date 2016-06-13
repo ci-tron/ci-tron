@@ -182,7 +182,7 @@ class ProjectController extends Controller
      */
     public function editProjectConfigurationAction(Request $request, Project $project)
     {
-        $configurationFactory = $this->get('app.project.configuration.factory');
+        $configurationFactory = $this->get('app.project.factory.configuration');
 
         $configuration = $configurationFactory->create();
 

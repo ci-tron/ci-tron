@@ -1,0 +1,3 @@
+services:
+    app.project.factory.configuration:
+        class: 'CiTron\Project\Factory\ConfigurationFactory'

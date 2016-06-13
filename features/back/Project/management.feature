@@ -124,7 +124,7 @@ Feature: Project management
     Given I am logged with username "nek" and password "nek"
     And I prepare a POST request on "back/secured/users/nek/projects/yolo/config/edit"
     And I specified the following request body:
-      | language             | PHP                                  |
+      | language             | php                                  |
       | envVars[0]           | FOO=bar                              |
       | envVars[1]           | ALPHA=bravo                          |
       | preparationScript[0] | git clone git:github.com/foo/bar.git |
@@ -140,7 +140,7 @@ Feature: Project management
           "id": 1,
           "slug": "yolo",
           "configuration": {
-            "language": "PHP",
+            "language": "php",
             "env_vars": "[\"FOO=bar\",\"ALPHA=bravo\"]",
             "preparation_script": "[\"git clone git:github.com\\\/foo\\\/bar.git\",\"composer install\",\"bin\\\/console do:da:cr\"]",
             "launch_script": "[\"bin\\\/console server:run\"]",
@@ -154,7 +154,7 @@ Feature: Project management
     And the response should contains the following json:
       """
         {
-          "language": "PHP",
+          "language": "php",
           "env_vars": "[\"FOO=bar\",\"ALPHA=bravo\"]",
           "preparation_script": "[\"git clone git:github.com\\\/foo\\\/bar.git\",\"composer install\",\"bin\\\/console do:da:cr\"]",
           "launch_script": "[\"bin\\\/console server:run\"]",
