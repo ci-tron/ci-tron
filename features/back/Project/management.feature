@@ -131,7 +131,7 @@ Feature: Project management
       | preparationScript[1] | composer install                     |
       | preparationScript[2] | bin/console do:da:cr                 |
       | launchScript[0]      | bin/console server:run               |
-      | VCS                  | github                               |
+      | vcs                  | github                               |
     When I send the request
     Then I should receive a 200 response
     And the response should contains the following json:
@@ -144,7 +144,7 @@ Feature: Project management
             "env_vars": "[\"FOO=bar\",\"ALPHA=bravo\"]",
             "preparation_script": "[\"git clone git:github.com\\\/foo\\\/bar.git\",\"composer install\",\"bin\\\/console do:da:cr\"]",
             "launch_script": "[\"bin\\\/console server:run\"]",
-            "_v_c_s": "github"
+            "vcs": "github"
           }
         }
       """
@@ -158,7 +158,7 @@ Feature: Project management
           "env_vars": "[\"FOO=bar\",\"ALPHA=bravo\"]",
           "preparation_script": "[\"git clone git:github.com\\\/foo\\\/bar.git\",\"composer install\",\"bin\\\/console do:da:cr\"]",
           "launch_script": "[\"bin\\\/console server:run\"]",
-          "_v_c_s": "github"
+          "vcs": "github"
         }
       """
 

@@ -28,7 +28,7 @@ class ConfigurationType extends AbstractType
             ->add('envVars', null, ['required' => false])
             ->add('preparationScript', null, ['required' => false])
             ->add('launchScript', null, ['required' => false])
-            ->add('VCS', ChoiceType::class, [
+            ->add('vcs', ChoiceType::class, [
                 'choices' => Configuration::VCS,
                 'required' => 'false',
             ])

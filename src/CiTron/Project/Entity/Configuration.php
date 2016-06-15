@@ -56,7 +56,7 @@ class Configuration extends ImmutableObject
      * @var string
      * @ORM\Column(name="vcs", type="string", length=255, nullable=true)
      */
-    protected $VCS;
+    protected $vcs;
 
     /**
      * @return Configuration
@@ -133,16 +133,16 @@ class Configuration extends ImmutableObject
     /**
      * @return string|null
      */
-    public function getVCS()
+    public function getVcs()
     {
-        return $this->VCS;
+        return $this->vcs;
     }
 
     /**
-     * @param string $VCS
+     * @param string $vcs
      */
-    public function setVCS($VCS)
+    public function setVcs($vcs)
     {
-        $this->VCS = $VCS;
+        $this->vcs = $vcs;
     }
 }
