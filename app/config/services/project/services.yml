@@ -1,3 +1,6 @@
+imports:
+    - { resource: factories.yml }
+
 services:
     app.project.repository:
         class: 'CiTron\Project\Repository\ProjectRepository'

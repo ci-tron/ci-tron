@@ -8,6 +8,7 @@
  * For the full license, take a look to the LICENSE file
  * on the root directory of this project
  */
+
 namespace CiTron\Project\Entity;
 
 use CiTron\User\Entity\User;
@@ -70,6 +71,14 @@ class Project
      * @ORM\Column(name="visibility", type="integer")
      */
     private $visibility;
+
+    /**
+     * @var Configuration
+     * @ORM\Embedded(class = "Configuration")
+     * @JMS\Groups({"standard", "current"})
+     * @JMS\Expose
+     */
+    private $configuration;
 
     /**
      * @var User
@@ -174,5 +183,21 @@ class Project
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * @return Configuration
+     */
+    public function getConfiguration()
+    {
+        return $this->configuration;
+    }
+
+    /**
+     * @param Configuration $configuration
+     */
+    public function setConfiguration($configuration)
+    {
+        $this->configuration = $configuration;
     }
 }

@@ -67,7 +67,8 @@ Feature: Project management
           {
             "name": "yolo",
             "slug": "yolo",
-            "repository": "github.com/nek/yolo"
+            "repository": "github.com/nek/yolo",
+            "configuration": {"env_vars":[],"preparation_script":[],"launch_script":[]}
           }
         ]
       """
@@ -82,7 +83,8 @@ Feature: Project management
         {
           "name": "yolo",
           "slug": "yolo",
-          "repository": "github.com/nek/yolo"
+          "repository": "github.com/nek/yolo",
+          "configuration": {"env_vars":[],"preparation_script":[],"launch_script":[]}
         }
       """
 
@@ -97,7 +99,8 @@ Feature: Project management
           {
             "name": "random-project",
             "slug": "random-project",
-            "repository": "github.com/valanz/random"
+            "repository": "github.com/valanz/random",
+            "configuration": {"env_vars":[],"preparation_script":[],"launch_script":[]}
           }
         ]
       """
@@ -112,7 +115,50 @@ Feature: Project management
         {
           "name": "random-project",
           "slug": "random-project",
-          "repository": "github.com/valanz/random"
+          "repository": "github.com/valanz/random",
+          "configuration": {"env_vars":[],"preparation_script":[],"launch_script":[]}
+        }
+      """
+
+  Scenario: define configuration for a given project
+    Given I am logged with username "nek" and password "nek"
+    And I prepare a POST request on "back/secured/users/nek/projects/yolo/config/edit"
+    And I specified the following request body:
+      | language             | php                                  |
+      | envVars[0]           | FOO=bar                              |
+      | envVars[1]           | ALPHA=bravo                          |
+      | preparationScript[0] | git clone git:github.com/foo/bar.git |
+      | preparationScript[1] | composer install                     |
+      | preparationScript[2] | bin/console do:da:cr                 |
+      | launchScript[0]      | bin/console server:run               |
+      | vcs                  | github                               |
+    When I send the request
+    Then I should receive a 200 response
+    And the response should contains the following json:
+      """
+        {
+          "id": 1,
+          "slug": "yolo",
+          "configuration": {
+            "language": "php",
+            "env_vars": "[\"FOO=bar\",\"ALPHA=bravo\"]",
+            "preparation_script": "[\"git clone git:github.com\\\/foo\\\/bar.git\",\"composer install\",\"bin\\\/console do:da:cr\"]",
+            "launch_script": "[\"bin\\\/console server:run\"]",
+            "vcs": "github"
+          }
+        }
+      """
+    And I prepare a GET request on "back/secured/users/nek/projects/yolo/config.json"
+    When I send the request
+    Then I should receive a 200 response
+    And the response should contains the following json:
+      """
+        {
+          "language": "php",
+          "env_vars": "[\"FOO=bar\",\"ALPHA=bravo\"]",
+          "preparation_script": "[\"git clone git:github.com\\\/foo\\\/bar.git\",\"composer install\",\"bin\\\/console do:da:cr\"]",
+          "launch_script": "[\"bin\\\/console server:run\"]",
+          "vcs": "github"
         }
       """
 

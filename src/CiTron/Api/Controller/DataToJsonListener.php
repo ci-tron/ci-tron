@@ -36,6 +36,7 @@ class DataToJsonListener
         if (is_string($controllerResult)) {
             if (null === json_decode($controllerResult)) {
                 $event->setResponse(new Response($controllerResult));
+
                 return;
             }
         } else {
