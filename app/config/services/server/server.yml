@@ -1,0 +1,19 @@
+services:
+    citron.server.main:
+        class: CiTron\Server\Server
+        arguments:
+            - "@citron.server.runner"
+            - "@citron.server.api"
+            - "@citron.server.web"
+
+    citron.server.runner:
+        class: CiTron\Server\RunnerServer
+
+    citron.server.web:
+        class: CiTron\Server\WebServer
+
+    citron.server.api:
+        class: CiTron\Server\ApiServer
+        arguments:
+            - "@citron.server.runner"
+
