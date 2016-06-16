@@ -16,13 +16,18 @@ use Ratchet\ConnectionInterface;
 
 class Runner
 {
-    const STATE_RUNNING = 1;
-    const STATE_WAITING = 2;
+    const STATE_RUNNING = "RUNNING";
+    const STATE_WAITING = "WAITING";
 
     /**
-     * @var int
+     * @var string
      */
     private $state;
+
+    /**
+     * @var string
+     */
+    private $name;
 
     /**
      * @var ConnectionInterface
@@ -34,7 +39,7 @@ class Runner
      */
     private $currentProject;
 
-    public function __construct(ConnectionInterface $connection)
+    public function __construct(ConnectionInterface $connection = null)
     {
         $this->connection = $connection;
         $this->state = Runner::STATE_WAITING;
@@ -46,15 +51,72 @@ class Runner
      */
     public function runProject(Build $project, ConnectionInterface $client)
     {
+        if ($this->connection === null) {
+            throw new \LogicException('You need to add the related connection first.');
+        }
         $this->state = Runner::STATE_RUNNING;
         $this->currentProject = $project;
+
+        // TODO: send to the runner what to do.
     }
 
     /**
-     * @return int
+     * @param ConnectionInterface $connection
+     * @return self
+     */
+    public function setConnection($connection)
+    {
+        $this->connection = $connection;
+
+        return $this;
+    }
+
+    /**
+     * @return Project
+     */
+    public function getCurrentProject()
+    {
+        return $this->currentProject;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return self
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
      */
     public function getState()
     {
         return $this->state;
+    }
+    
+    /**
+     * @param string $state
+     * @return Runner
+     */
+    public function setState(string $state)
+    {
+        if (!in_array($state, [Runner::STATE_RUNNING, Runner::STATE_WAITING])) {
+            throw new \InvalidArgumentException(sprintf('The state %s is not valid', $state));
+        }
+        
+        $this->state = $state;
+        return $this;
     }
 }

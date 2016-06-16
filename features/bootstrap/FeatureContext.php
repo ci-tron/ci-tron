@@ -51,6 +51,7 @@ class FeatureContext extends FriendlyContext implements Context, SnippetAcceptin
     public function gatherContexts(\Behat\Behat\Hook\Scope\BeforeScenarioScope $scope)
     {
         $environment = $scope->getEnvironment();
+        $this->apiContext = $environment->getContext('Knp\\FriendlyContexts\\Context\\ApiContext');
     }
 
     /**
@@ -117,7 +118,7 @@ class FeatureContext extends FriendlyContext implements Context, SnippetAcceptin
     }
 
     /**
-     * @When print last response
+     * @When print last api response
      */
     public function printLastResponse()
     {

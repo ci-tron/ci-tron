@@ -1,5 +1,6 @@
 imports:
     - { resource: factories.yml }
+    - { resource: runners.yml }
 
 services:
     app.project.repository:
