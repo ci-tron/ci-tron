@@ -16,16 +16,10 @@ import {LoginComponent} from "./user/security.component";
  * This component is the top/root component.
  */
 @Component({
-    selector: 'my-app',
+    selector: 'ci-tron',
     providers: [HTTP_PROVIDERS, Session],
     directives:  [LoginComponent],
-    template: `
-    <div *ngIf="logged">
-        <h1 >I'm ci-tron !</h1>
-        <p><a href="#" (click)="onLogout()">logout</a></p>
-    </div>
-    <login *ngIf="!logged" (updateUserStatus)="updateUserStatus($event)"></login>
-    `
+    templateUrl: 'app/templates/layout.html'
 })
 export class AppComponent implements OnInit {
 
