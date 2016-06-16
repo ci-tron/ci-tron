@@ -1,0 +1,11 @@
+<div id="project">
+    <h1>{{ project?.name }}</h1>
+    <ul class="nav nav-tabs">
+        <li role="presentation" [class.active]="isActive(['ProjectDashboard'])"><a [routerLink]="['ProjectDashboard']">Dashboard</a></li>
+        <li role="presentation" [class.active]="isActive(['ProjectBuilds'])"><a [routerLink]="['ProjectBuilds']">Builds</a></li>
+        <li role="presentation" [class.active]="isActive(['ProjectStatistics'])"><a [routerLink]="['ProjectStatistics']">Statistics</a></li>
+        <li role="presentation" [class.active]="isActive(['ProjectSettings'])"><a [routerLink]="['ProjectSettings']">Settings</a></li>
+    </ul>
+
+    <router-outlet></router-outlet>
+</div>

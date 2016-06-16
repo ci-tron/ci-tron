@@ -21,5 +21,5 @@ Feature:
 
     Examples:
       | username | password | response_text   |
-      | Nek      | max      | I'm ci-tron !   |
+      | Nek      | max      | Projects        |
       | foo      | bar      | Bad credentials |

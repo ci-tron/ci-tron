@@ -1,0 +1,20 @@
+<h1>Project creation</h1>
+<router-outlet></router-outlet>
+<form [ngFormModel]="creationForm" (ngSubmit)="onSubmit()">
+    <p *ngIf="error">Error: {{error}}</p>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" ngControl="name" [(ngModel)]="name">
+    </div>
+    <div class="form-group">
+        <label for="repository">Repository</label>
+        <input type="text" class="form-control" ngControl="repository" [(ngModel)]="repository" id="repository">
+    </div>
+    <div class="form-group">
+        <label>Visibility</label>
+        <select class="form-control" required ngControl="visibility" [(ngModel)]="visibility">
+            <option *ngFor="#v of visibility; #i = index" [value]="i">{{v}}</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-default">Create project</button>
+</form>

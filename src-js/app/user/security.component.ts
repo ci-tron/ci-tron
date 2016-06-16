@@ -25,7 +25,9 @@ export class LoginComponent {
     constructor(private session:Session) {}
 
     onSubmit() {
-        this.session.login(this.username, this.password).subscribe(() => {
+        this.session.login(this.username, this.password).subscribe((data) => {
+            console.log(data);
+            console.log('========');
             this.updateUserStatus.emit(true);
         }, (error) => {
             if (error.status === 401) {

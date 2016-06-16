@@ -10,6 +10,11 @@ import {Component, OnInit} from 'angular2/core';
 import {HTTP_PROVIDERS}    from 'angular2/http';
 import {Session} from "./user/session.service";
 import {LoginComponent} from "./user/security.component";
+import {ProjectComponent} from "./project/project.component";
+import {RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Router} from "angular2/router";
+import {DashboardComponent} from "./dashboard.component";
+import {ProjectCreationComponent} from "./project/project.creation.component";
+import {ProfileComponent} from "./user/profile.component";
 
 
 /**
@@ -18,14 +23,21 @@ import {LoginComponent} from "./user/security.component";
 @Component({
     selector: 'ci-tron',
     providers: [HTTP_PROVIDERS, Session],
-    directives:  [LoginComponent],
+    directives:  [ROUTER_DIRECTIVES, LoginComponent],
     templateUrl: 'app/templates/layout.html'
 })
+@RouteConfig([
+    { path: '/dashboard',  name: 'Dashboard', component: DashboardComponent, useAsDefault: true },
+    { path: '/projects/:slug/...', name: 'Project',  component: ProjectComponent },
+    { path: '/projects/new', name: 'ProjectCreation',  component: ProjectCreationComponent },
+    { path: '/login', name: 'Login',  component: LoginComponent },
+    { path: '/profile', name: 'Profile',  component: ProfileComponent }
+])
 export class AppComponent implements OnInit {
 
     logged:boolean = null;
 
-    constructor(private session:Session) {}
+    constructor(private session:Session, private router: Router) {}
 
     /**
      * This method is called by the LoginComponent on user update status.
@@ -36,10 +48,13 @@ export class AppComponent implements OnInit {
     }
 
     onLogout() {
+
         this.session.logout().then(
             (session:Session) => this.logged = session.isActive(),
             (error) => console.error(error)
         );
+
+        this.router.navigate(['/Dashboard']);
 
         return false;
     }

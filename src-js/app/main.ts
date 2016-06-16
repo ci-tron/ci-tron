@@ -16,5 +16,11 @@ import 'reflect-metadata';
 
 import {bootstrap}    from 'angular2/platform/browser'
 import {AppComponent} from './app.component'
+import {APP_BASE_HREF, LocationStrategy, HashLocationStrategy, ROUTER_PROVIDERS} from "angular2/router";
+import {provide} from "angular2/core";
 
-bootstrap(AppComponent);
+bootstrap(AppComponent, [
+    ROUTER_PROVIDERS,
+    provide(LocationStrategy, {useClass: HashLocationStrategy}),
+    provide(APP_BASE_HREF, {useValue: '/'}
+]);
