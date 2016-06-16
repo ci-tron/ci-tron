@@ -27,7 +27,7 @@ class Message
     private $type;
 
     /**
-     * @var
+     * @var array
      */
     private $content;
 
@@ -61,7 +61,7 @@ class Message
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getContent()
     {
@@ -69,7 +69,7 @@ class Message
     }
 
     /**
-     * @param mixed $content
+     * @param array $content
      * @return self
      */
     public function setContent($content)

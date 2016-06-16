@@ -16,12 +16,17 @@ class MessageFactorySpec extends ObjectBehavior
     
     function it_should_guess_message_type()
     {
-        $this::createMessage('RUNNER:init:Hello world')->shouldReturnMessageThat(Message::RUNNER, 'init', 'Hello world');
+        $this::shouldThrow()->duringCreateMessage('RUNNER:init:Hello world');
+    }
+    
+    function it_should_create_message()
+    {
+        $this::createMessage('RUNNER:test_init:{"foo": "bar"}')->shouldReturnMessageThat(Message::RUNNER, 'test_init', ['foo' => 'bar']);
     }
     
     function it_should_work_without_content()
     {
-        $this::createMessage('RUNNER:init:')->shouldReturnMessageThat(Message::RUNNER, 'init', '');
+        $this::createMessage('RUNNER:init:')->shouldReturnMessageThat(Message::RUNNER, 'init', null);
     }
     
     public function getMatchers()

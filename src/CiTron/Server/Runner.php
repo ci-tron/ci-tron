@@ -13,7 +13,13 @@ namespace CiTron\Server;
 
 use CiTron\Project\Entity\Project;
 use Ratchet\ConnectionInterface;
+use JMS\Serializer\Annotation as JMS;
 
+/**
+ * Class Runner
+ *
+ * @JMS\ExclusionPolicy("all")
+ */
 class Runner
 {
     const STATE_RUNNING = "RUNNING";
@@ -21,6 +27,7 @@ class Runner
 
     /**
      * @var string
+     * @JMS\Expose
      */
     private $state;
 
@@ -28,6 +35,12 @@ class Runner
      * @var string
      */
     private $name;
+
+    /**
+     * @var string
+     * @JMS\Expose
+     */
+    private $type;
 
     /**
      * @var ConnectionInterface
@@ -105,7 +118,7 @@ class Runner
     {
         return $this->state;
     }
-    
+
     /**
      * @param string $state
      * @return Runner
@@ -115,8 +128,27 @@ class Runner
         if (!in_array($state, [Runner::STATE_RUNNING, Runner::STATE_WAITING])) {
             throw new \InvalidArgumentException(sprintf('The state %s is not valid', $state));
         }
-        
+
         $this->state = $state;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string $type
+     * @return self
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
         return $this;
     }
 }

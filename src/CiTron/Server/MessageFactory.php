@@ -30,7 +30,12 @@ class MessageFactory
         }
         
         $message->setAction($matches[2]);
-        $message->setContent($matches[3]);
+        
+        $json = json_decode($matches[3], true);
+        if ($json === null && $matches[3] !== null && $matches[3] !== '') {
+            throw new InvalidMessageException;
+        }
+        $message->setContent($json);
         
         return $message;
     }

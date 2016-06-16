@@ -54,6 +54,7 @@ class RunnerServer
         }
 
         $runner = new Runner($message->getFrom());
+        $runner->setType($message->getContent()['type']);
 
         $this->runners[] = $runner;
         echo "One new runner registered\n";
