@@ -14,7 +14,7 @@ Feature:
     Given I am on the homepage
     And I should see "Login"
     And I fill in the following:
-      | Username | <username> |
+      | Login    | <username> |
       | Password | <password> |
     When I press "Login"
     Then I should see "<response_text>"

@@ -1,13 +1,20 @@
-<h1>Login</h1>
-<form (ngSubmit)="onSubmit()">
-    <p *ngIf="error">{{error}}</p>
-    <div>
-        <label for="username">Username</label>
-        <input type="text" id="username" [(ngModel)]="username">
+<div class="container" id="login">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>Sign in ci-tron</h1>
+            <form (ngSubmit)="onSubmit()">
+                <p *ngIf="error">{{error}}</p>
+                <div class="form-group">
+                    <label for="username">Login</label>
+                    <input type="text" class="form-control" id="username" [(ngModel)]="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" [(ngModel)]="password" id="password">
+                </div>
+                <button type="submit" class="btn btn-default pull-right">Login</button>
+            </form>
+        </div>
     </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" [(ngModel)]="password" id="password">
-    </div>
-    <button type="submit" class="btn btn-default">Login</button>
-</form>
+</div>
+
