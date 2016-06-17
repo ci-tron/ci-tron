@@ -72,7 +72,7 @@ class Runner
         $this->currentBuild = $build;
 
         $client->send('run:' . json_encode([
-            'repo' => $build, 
+            'repo' => $build,
             'script' => array_merge(
                 $build->getProject()->getConfiguration()->getPreparationScript(),
                 $build->getProject()->getConfiguration()->getLaunchScript()
@@ -94,9 +94,9 @@ class Runner
     /**
      * @return Project
      */
-    public function getCurrentProject()
+    public function getCurrentBuild()
     {
-        return $this->currentProject;
+        return $this->currentBuild;
     }
 
     /**
