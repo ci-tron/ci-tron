@@ -225,4 +225,15 @@ class Build
     {
         $this->logs = $logs;
     }
+
+    /**
+     * @param string $log
+     * @return $this
+     */
+    public function addLog($log)
+    {
+        $this->logs .= "\n" . $log;
+        
+        return $this;
+    }
 }

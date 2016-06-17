@@ -92,7 +92,7 @@ class Runner
     }
 
     /**
-     * @return Project
+     * @return Build
      */
     public function getCurrentBuild()
     {

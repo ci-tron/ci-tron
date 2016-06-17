@@ -11,6 +11,7 @@
 namespace CiTron\Server;
 
 
+use CiTron\Project\Entity\Build;
 use CiTron\Server\Exception\InvalidMessageException;
 use CiTron\Server\Exception\NoAvailableRunnerException;
 use Doctrine\Bundle\DoctrineBundle\Registry;
@@ -23,9 +24,15 @@ class RunnerServer
      */
     private $runners;
 
-    public function __construct()
+    /**
+     * @var Registry
+     */
+    private $doctrine;
+
+    public function __construct(Registry $doctrine)
     {
         $this->runners = [];
+        $this->doctrine = $doctrine;
     }
 
     /**
@@ -58,6 +65,23 @@ class RunnerServer
 
         $this->runners[] = $runner;
         echo "One new runner registered\n";
+    }
+
+    protected function processProcess(Message $message)
+    {
+        $runner = $this->getRunner($message);
+        $data = $message->getContent();
+        if (!$data['finished']) {
+            $runner->getCurrentBuild()->addLog($data['log']);
+            return;
+        }
+        
+        $runner->getCurrentBuild()->setState($data['result'] === 'success' ? Build::STATE_SUCCESS : Build::STATE_FAILED);
+        
+        $this->getEntityManager()->merge($runner->getCurrentBuild());
+        $this->getEntityManager()->flush();
+            
+        $runner->setState(Runner::STATE_WAITING);
     }
 
     protected function processUnregister(Message $message)
@@ -104,5 +128,13 @@ class RunnerServer
         }
 
         return null;
+    }
+
+    /**
+     * @return \Doctrine\Common\Persistence\ObjectManager
+     */
+    private function getEntityManager()
+    {
+        return $this->doctrine->getManager();
     }
 }
