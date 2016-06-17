@@ -78,6 +78,7 @@ class Project
      * @ORM\Embedded(class = "Configuration")
      * @JMS\Groups({"standard", "current"})
      * @JMS\Expose
+     * @JMS\Type("CiTron\Project\Entity\Configuration")
      */
     private $configuration;
 

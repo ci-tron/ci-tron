@@ -70,9 +70,11 @@ class Runner
         }
         $this->state = Runner::STATE_RUNNING;
         $this->currentBuild = $build;
+        
 
-        $client->send('run:' . json_encode([
-            'repo' => $build,
+        echo "Sending order to run...\n";
+        $this->connection->send('run:' . json_encode([
+            'repo' => $build->getProject()->getRepository(),
             'script' => array_merge(
                 $build->getProject()->getConfiguration()->getPreparationScript(),
                 $build->getProject()->getConfiguration()->getLaunchScript()

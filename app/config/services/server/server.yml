@@ -8,6 +8,8 @@ services:
 
     citron.server.runner:
         class: CiTron\Server\RunnerServer
+        arguments:
+            - "@doctrine"
 
     citron.server.web:
         class: CiTron\Server\WebServer

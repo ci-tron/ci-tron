@@ -20,7 +20,9 @@ Feature: Project builds
     And the response should contains the following json:
       """
         {
-          "id": 1
+          "id": 1,
+          "number": 1,
+          "state": "WAITING"
         }
       """
 

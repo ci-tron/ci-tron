@@ -22,6 +22,7 @@ class MessageFactory
         
         switch ($matches[1]) {
             case Message::RUNNER:
+            case Message::API:    
             case Message::WEB:
                 $message->setType($matches[1]);
                 break;

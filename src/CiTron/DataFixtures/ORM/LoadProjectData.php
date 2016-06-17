@@ -31,7 +31,11 @@ class LoadProjectData extends AbstractFixture implements OrderedFixtureInterface
         $project = new Project();
         $project->setUser($this->getReference('user_admin'));
         $project->setName('Test Project');
-        $project->setConfiguration($this->container->get('app.project.factory.configuration')->create());
+        $project->setConfiguration($this->container->get('app.project.factory.configuration')->create(
+            'php',
+            ['composer install'],
+            ['php bin/phpunit']
+        ));
         $project->setRepository('http://gl.nekland.fr/Nek/Woketo.git');
         
         $manager->persist($project);

@@ -37,6 +37,11 @@ class Server implements MessageComponentInterface
      */
     private $output;
 
+    /**
+     * @var ApiServer
+     */
+    private $apiServer;
+
 
     public function __construct(RunnerServer $runnerServer = null, ApiServer $apiServer = null, WebServer $webServer = null)
     {
@@ -63,6 +68,8 @@ class Server implements MessageComponentInterface
             case Message::RUNNER:
                 $this->processRunnerMessage($message);
                 break;
+            default:
+                echo "Wrong message type: " . $message->getType() . "\n";
         }
     }
 

@@ -12,6 +12,7 @@ namespace CiTron\Project\Entity;
 
 use CiTron\Symfony\Entity\ImmutableObject;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Embeddable
@@ -30,24 +31,28 @@ class Configuration extends ImmutableObject
     /**
      * @var string
      * @ORM\Column(name="language", type="string", length=255, nullable=true)
+     * @JMS\Type("string")
      */
     protected $language;
 
     /**
      * @var string
      * @ORM\Column(name="envVars", type="json_array", nullable=true)
+     * @JMS\Type("array")
      */
     protected $envVars;
 
     /**
      * @var string
      * @ORM\Column(name="preparationScript", type="json_array", nullable=true)
+     * @JMS\Type("array")
      */
     protected $preparationScript;
 
     /**
      * @var string
      * @ORM\Column(name="launchScript", type="json_array", nullable=true)
+     * @JMS\Type("array")
      */
     protected $launchScript;
 

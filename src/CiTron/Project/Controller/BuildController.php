@@ -25,7 +25,7 @@ class BuildController extends Controller
      * @param Project $project
      * @return Build
      *
-     * @Route("/projects/{slug}/builds/new/{commit}", name="user_project_builds_new")
+     * @Route("/secured/projects/{slug}/builds/new/{commit}", name="user_project_builds_new")
      * @Method({"GET"})
      * Security("is_granted('read', project)")
      */

@@ -12,6 +12,7 @@ namespace CiTron\Project\WebSockets;
 
 use CiTron\Project\Entity\Build;
 use JMS\Serializer\Serializer;
+use Ratchet\Client\WebSocket;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Client
@@ -41,6 +42,8 @@ class Client
     public function __construct(Serializer $serializer, int $port, string $host)
     {
         $this->serializer = $serializer;
+        $this->port = $port;
+        $this->host = $host;
     }
 
     public function getRunnersAsJson()
@@ -67,12 +70,12 @@ class Client
     public function run(Build $build)
     {
         $res = null;
-        \Ratchet\Client\connect('ws://' . $this->port . ':' . $this->host . '/runner')->then(function($conn) use (&$res, $build) {
+        \Ratchet\Client\connect('ws://' . $this->host . ':' . $this->port . '/runner')->then(function(WebSocket $conn) use (&$res, $build) {
             $conn->on('message', function ($message) use (&$res, $conn, $build) {
                 $res = $message;
                 $conn->close();
             });
-            $conn->write('API:run:' . $this->serializer->serialize($build, 'json'));
+            $conn->send('API:run:' . $this->serializer->serialize($build, 'json'));
         }, function ($e) {
             throw new \Exception($e->getMessage());
         });

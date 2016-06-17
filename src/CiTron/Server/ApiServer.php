@@ -37,17 +37,21 @@ class ApiServer
      */
     public function process(Message $message)
     {
-        switch ($message) {
+        switch ($message->getAction()) {
             case 'run':
+                echo "Start a build !\n";
                 $build = $this->serializer->deserialize($message->getRawContent(), 'CiTron\\Project\\Entity\\Build', 'json');
                 try {
                     $runner = $this->runnerServer->getFreeRunner();
                     $runner->runProject($build, $message->getFrom());
                 } catch (NoAvailableRunnerException $e) {
                     $message->getFrom()->send(Message::FAILURE);
+                    echo "No runner is free \n";
                 }
+                break;
             default:
                 // Do nothing
+                echo "Wrong message received...\n";
         }
         $message->getFrom()->close();
     }
