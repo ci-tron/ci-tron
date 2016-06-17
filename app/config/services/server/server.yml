@@ -16,4 +16,5 @@ services:
         class: CiTron\Server\ApiServer
         arguments:
             - "@citron.server.runner"
+            - "@jms_serializer"
 

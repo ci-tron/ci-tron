@@ -14,8 +14,8 @@ use CiTron\Project\Entity\Configuration;
 
 class ConfigurationFactory
 {
-    public function create()
+    public function create(string $language = null, array $preparation = null, array $launch = null)
     {
-        return Configuration::create();
+        return Configuration::create($language, $preparation, $launch);
     }
 }

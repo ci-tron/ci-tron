@@ -18,15 +18,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Configuration extends ImmutableObject
 {
-    const LANGUAGES = [
-        'php',
-        'javascript',
-    ];
+    const LANGUAGE_JAVASCRIPT = 'JAVASCRIPT';
+    const LANGUAGE_PHP = 'PHP';
 
-    const VCS = [
-        'github',
-        'bitbucket',
-    ];
+    const HOST_GITHUB = 'GITHUB';
+    const HOST_BITBUCKET = 'BITBUCKET';
+
+    const VCS_GIT = 'GIT';
+    const VCS_SVN = 'SVN';
 
     /**
      * @var string
@@ -61,9 +60,13 @@ class Configuration extends ImmutableObject
     /**
      * @return Configuration
      */
-    static public function create() : Configuration
+    static public function create(string $language = null, array $preparation = null, array $launch = null) : Configuration
     {
-        return new Configuration();
+        return (new Configuration())
+            ->setLaunchScript($launch)
+            ->setPreparationScript($preparation)
+            ->setLanguage($language)
+        ;
     }
 
     /**
@@ -76,10 +79,13 @@ class Configuration extends ImmutableObject
 
     /**
      * @param string $language
+     * @return Configuration
      */
-    public function setLanguage($language)
+    private function setLanguage($language)
     {
         $this->language = $language;
+        
+        return $this;
     }
 
     /**
@@ -92,10 +98,13 @@ class Configuration extends ImmutableObject
 
     /**
      * @param string $envVars
+     * @return Configuration
      */
-    public function setEnvVars($envVars)
+    private function setEnvVars($envVars)
     {
         $this->envVars = $envVars;
+        
+        return $this;
     }
 
     /**
@@ -108,10 +117,13 @@ class Configuration extends ImmutableObject
 
     /**
      * @param string $preparationScript
+     * @return Configuration
      */
-    public function setPreparationScript($preparationScript)
+    private function setPreparationScript($preparationScript)
     {
         $this->preparationScript = $preparationScript;
+        
+        return $this;
     }
 
     /**
@@ -124,10 +136,13 @@ class Configuration extends ImmutableObject
 
     /**
      * @param string $launchScript
+     * @return Configuration
      */
-    public function setLaunchScript($launchScript)
+    private function setLaunchScript($launchScript)
     {
         $this->launchScript = $launchScript;
+        
+        return $this;
     }
 
     /**
@@ -140,9 +155,12 @@ class Configuration extends ImmutableObject
 
     /**
      * @param string $vcs
+     * @return Configuration
      */
-    public function setVcs($vcs)
+    private function setVcs($vcs)
     {
         $this->vcs = $vcs;
+        
+        return $this;
     }
 }

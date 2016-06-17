@@ -23,30 +23,35 @@ class BuildController extends Controller
 {
     /**
      * @param Project $project
-     * @return JsonResponse
+     * @return Build
      *
-     * @Route("/secured/users/{slug}/projects/{projectSlug}/builds/new", name="user_project_builds_new")
+     * @Route("/projects/{slug}/builds/new/{commit}", name="user_project_builds_new")
      * @Method({"GET"})
-     * @Security("is_granted('read', project)")
+     * Security("is_granted('read', project)")
      */
-    public function newBuildAction(Project $project)
+    public function newBuildAction(Project $project, $commit)
     {
         //starting build
         $em = $this->getDoctrine()->getEntityManager();
 
         $build = new Build();
+        $build->setProject($project);
+        $build->setCommit($commit);
+        $build->setNumber(count($project->getBuilds()) + 1); // yolo
 
         $em->persist($build);
         $em->flush();
 
-        return new $build;
+        $this->get('citron.project.websocket.client')->run($build);
+
+        return $this->serializeWithGroups($build, ['partial']);
     }
 
     /**
      * @param Project $project
      * @return JsonResponse
      *
-     * @Route("/secured/users/{slug}/projects/{projectSlug}/builds.json", name="user_project_builds")
+     * @Route("/secured/projects/{slug}/{projectSlug}/builds.json", name="user_project_builds")
      * @Route("/users/{slug}/projects/{projectSlug}/builds.json", name="public_user_project_builds")
      * @Method({"GET"})
      * @Security("is_granted('read', project)")
@@ -68,27 +73,6 @@ class BuildController extends Controller
     public function getBuildAction(Project $project, Build $build)
     {
         return $build;
-    }
-
-    /**
-     * @param Project $project
-     * @return JsonResponse
-     *
-     * @Route("/secured/users/{slug}/projects/{projectSlug}/builds/{buildId}/relaunch", name="user_project_builds_relaunch")
-     * @Method({"POST"})
-     * @Security("is_granted('edit', project)")
-     */
-    public function relaunchBuildAction(Project $project, Build $build)
-    {
-        //relaunching build
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $newBuild = clone $build;
-
-        $em->persist($newBuild);
-        $em->flush();
-
-        return new $newBuild;
     }
 
     /**

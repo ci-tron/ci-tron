@@ -34,12 +34,16 @@ class Build
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMS\Groups({"standard"})
+     * @JMS\Expose()
      */
     private $id;
 
     /**
      * @var int
      * @ORM\Column(name="number", type="integer", nullable=true)
+     * @JMS\Groups({"standard", "partial"})
+     * @JMS\Expose()
      */
     private $number;
 
@@ -48,37 +52,49 @@ class Build
      *
      * @ORM\ManyToOne(targetEntity="CiTron\Project\Entity\Project", inversedBy="builds")
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     * @JMS\Groups({"standard"})
+     * @JMS\Expose()
+     * @JMS\Type("CiTron\Project\Entity\Project")
      */
     private $project;
 
     /**
      * @var string
-     * @ORM\Column()
+     * @ORM\Column
      */
     private $commit;
 
     /**
      * @var string
-     * @ORM\Column(name="logs", type="string", length=255, nullable=true)
-     * @JMS\Groups({"standard", "current"})
+     *
+     * @ORM\Column(name="logs", type="text", nullable=true)
+     * @JMS\Groups({"standard"})
+     * @JMS\Expose()
      */
     private $logs;
 
     /**
-     * @var bool
-     * @ORM\Column(name="state", type="boolean", nullable=true)
+     * @var string
+     *
+     * @ORM\Column(name="state", nullable=true)
+     * @JMS\Expose()
+     * @JMS\Groups({"standard", "partial"})
      */
     private $state;
 
     /**
      * @var \DateTime
      * @ORM\Column(name="started_at", type="datetime", nullable=true)
+     * @JMS\Expose()
+     * @JMS\Groups({"standard"})
      */
     private $startedAt;
 
     /**
      * @var \DateTime
      * @ORM\Column(name="finished_at", type="datetime", nullable=true)
+     * @JMS\Expose()
+     * @JMS\Groups({"standard"})
      */
     private $finishedAt;
 
@@ -144,19 +160,22 @@ class Build
     }
 
     /**
-     * @return boolean
+     * @return string
      */
-    public function isState()
+    public function getState()
     {
         return $this->state;
     }
 
     /**
-     * @param boolean $state
+     * @param string $state
+     * @return self
      */
     public function setState($state)
     {
         $this->state = $state;
+
+        return $this;
     }
 
     /**

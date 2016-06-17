@@ -13,9 +13,4 @@ namespace CiTron\Symfony\Entity;
 
 interface ImmutableObjectInterface
 {
-    /**
-     * This function will create a value object
-     * @return object
-     */
-    static public function create();
 }

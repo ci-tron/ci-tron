@@ -34,6 +34,11 @@ class Message
     /**
      * @var string
      */
+    private $rawContent;
+
+    /**
+     * @var string
+     */
     private $action;
 
     /**
@@ -113,6 +118,25 @@ class Message
     public function setAction($action)
     {
         $this->action = $action;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRawContent()
+    {
+        return $this->rawContent;
+    }
+
+    /**
+     * @param string $rawContent
+     * @return self
+     */
+    public function setRawContent($rawContent)
+    {
+        $this->rawContent = $rawContent;
 
         return $this;
     }

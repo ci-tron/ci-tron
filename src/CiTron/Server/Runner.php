@@ -11,6 +11,7 @@
 namespace CiTron\Server;
 
 
+use CiTron\Project\Entity\Build;
 use CiTron\Project\Entity\Project;
 use Ratchet\ConnectionInterface;
 use JMS\Serializer\Annotation as JMS;
@@ -48,9 +49,9 @@ class Runner
     private $connection;
 
     /**
-     * @var Project
+     * @var Build
      */
-    private $currentProject;
+    private $currentBuild;
 
     public function __construct(ConnectionInterface $connection = null)
     {
@@ -59,18 +60,24 @@ class Runner
     }
 
     /**
-     * @param Build $project
+     * @param Build $build
      * @param ConnectionInterface $client
      */
-    public function runProject(Build $project, ConnectionInterface $client)
+    public function runProject(Build $build, ConnectionInterface $client)
     {
         if ($this->connection === null) {
             throw new \LogicException('You need to add the related connection first.');
         }
         $this->state = Runner::STATE_RUNNING;
-        $this->currentProject = $project;
+        $this->currentBuild = $build;
 
-        // TODO: send to the runner what to do.
+        $client->send('run:' . json_encode([
+            'repo' => $build, 
+            'script' => array_merge(
+                $build->getProject()->getConfiguration()->getPreparationScript(),
+                $build->getProject()->getConfiguration()->getLaunchScript()
+            )
+        ]));
     }
 
     /**

@@ -36,6 +36,7 @@ class MessageFactory
             throw new InvalidMessageException;
         }
         $message->setContent($json);
+        $message->setRawContent($matches[3]);
         
         return $message;
     }

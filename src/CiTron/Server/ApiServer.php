@@ -12,6 +12,7 @@ namespace CiTron\Server;
 
 
 use CiTron\Server\Exception\NoAvailableRunnerException;
+use JMS\Serializer\Serializer;
 
 class ApiServer
 {
@@ -20,9 +21,15 @@ class ApiServer
      */
     private $runnerServer;
 
-    public function __construct(RunnerServer $runnerServer)
+    /**
+     * @var Serializer
+     */
+    private $serializer;
+
+    public function __construct(RunnerServer $runnerServer, Serializer $serializer)
     {
         $this->runnerServer = $runnerServer;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -32,9 +39,10 @@ class ApiServer
     {
         switch ($message) {
             case 'run':
+                $build = $this->serializer->deserialize($message->getRawContent(), 'CiTron\\Project\\Entity\\Build', 'json');
                 try {
                     $runner = $this->runnerServer->getFreeRunner();
-                    $runner->runProject($message->getContent(), $message->getFrom());
+                    $runner->runProject($build, $message->getFrom());
                 } catch (NoAvailableRunnerException $e) {
                     $message->getFrom()->send(Message::FAILURE);
                 }

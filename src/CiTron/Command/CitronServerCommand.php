@@ -28,9 +28,10 @@ class CitronServerCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $port = $input->getOption('port');
         $server = new \Ratchet\App(
             '127.0.0.1',
-            $input->getOption('port'),
+            $port,
             '127.0.0.1',
             null,
             $this->getContainer()->get('kernel')->getEnvironment() !== 'prod'
@@ -40,6 +41,8 @@ class CitronServerCommand extends ContainerAwareCommand
         $serverListener->setOutput($output);
 
         $server->route('/runner', $serverListener, ['*']);
+
+        $output->writeln('<info>Starting server on port '. $port .'</info>');
         $server->run();
     }
 
