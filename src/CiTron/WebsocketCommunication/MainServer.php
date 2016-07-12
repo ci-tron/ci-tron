@@ -12,6 +12,7 @@ namespace CiTron\WebsocketCommunication;
 
 
 use CiTron\Tools\ArrayCollection;
+use CiTron\WebsocketCommunication\Messages\RunnerHelloMessage;
 use CiTron\WebsocketCommunication\Tools\Client;
 use CiTron\WebsocketCommunication\Tools\MessageFactory;
 use Ratchet\ConnectionInterface;
@@ -24,9 +25,15 @@ class MainServer implements MessageComponentInterface
      */
     private $clients;
 
+    /**
+     * @var MessageFactory
+     */
+    private $messageFactory;
+
     public function __construct(MessageFactory $messageFactory)
     {
         $this->clients = new ArrayCollection;
+        $this->messageFactory = $messageFactory;
     }
 
     function onOpen(ConnectionInterface $conn)
@@ -53,6 +60,12 @@ class MainServer implements MessageComponentInterface
 
     function onMessage(ConnectionInterface $from, $msg)
     {
-        
+        $message = $this->messageFactory->createMessageObject($msg);
+
+        switch(true) {
+            case $message instanceof RunnerHelloMessage:
+                var_dump($message->getName());
+                break;
+        }
     }
 }

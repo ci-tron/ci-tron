@@ -6,6 +6,8 @@ parameters:
 imports:
     - { resource: services/api/listeners.yml }
     - { resource: services/user/listeners.yml }
+    - { resource: services/server/factory.yml }
+    - { resource: services/server/servers.yml }
 
 
 services:

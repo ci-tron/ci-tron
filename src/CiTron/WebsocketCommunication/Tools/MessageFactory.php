@@ -10,6 +10,7 @@
 
 namespace CiTron\WebsocketCommunication\Tools;
 
+use CiTron\WebsocketCommunication\Messages\AbstractMessage;
 use Nekland\Tools\StringTools;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
@@ -60,7 +61,7 @@ class MessageFactory
             );
         }
 
-        $messageObject = new $class();
+        $messageObject = new $class($this);
         foreach ($message as $key => $item) {
             $this->propertyAccessor->setValue($messageObject, $key, $item);
         }
@@ -68,7 +69,7 @@ class MessageFactory
         return $messageObject;
     }
 
-    public function createJsonMessage()
+    public function createJsonMessage(AbstractMessage $message) : string
     {
 
     }

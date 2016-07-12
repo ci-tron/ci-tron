@@ -1,0 +1,6 @@
+services:
+
+    citron.server.message.factory:
+        class: CiTron\WebsocketCommunication\Tools\MessageFactory
+        arguments:
+            - "@property_accessor"

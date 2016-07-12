@@ -10,6 +10,8 @@
 
 namespace CiTron\WebsocketCommunication\Messages;
 
+use CiTron\WebsocketCommunication\Tools\MessageFactory;
+
 /**
  * Class AbstractMessage
  *
@@ -17,5 +19,33 @@ namespace CiTron\WebsocketCommunication\Messages;
  */
 abstract class AbstractMessage
 {
+    /**
+     * @var MessageFactory
+     */
+    private $factory;
 
+    /**
+     * AbstractMessage constructor.
+     * @param MessageFactory $factory
+     */
+    public function __construct(MessageFactory $factory)
+    {
+        $this->factory = $factory;
+    }
+
+    /**
+     * @return MessageFactory
+     */
+    protected function getFactory() : MessageFactory
+    {
+        return $this->factory;
+    }
+
+    /**
+     * @return string
+     */
+    public function toJson() : string
+    {
+        return $this->factory->createJsonMessage($this);
+    }
 }

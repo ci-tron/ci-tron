@@ -1,0 +1,6 @@
+services:
+
+    citron.server.main:
+        class: CiTron\WebsocketCommunication\MainServer
+        arguments:
+            - "@citron.server.message.factory"
