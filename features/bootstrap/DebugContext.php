@@ -74,7 +74,7 @@ class DebugContext implements Context, KernelAwareContext
             );
 
             $transport = \Swift_SmtpTransport::newInstance('smtp.mailgun.org', 587)
-                ->setUsername('test@sandbox90ea023f482a4f3faf810cca3a5febb8.mailgun.org')
+                ->setUsername($this->getSmtpUsername())
                 ->setPassword($this->getSmtpPassword())
             ;
             $mailer = \Swift_Mailer::newInstance($transport);
@@ -103,9 +103,20 @@ class DebugContext implements Context, KernelAwareContext
         return $scenario;
     }
 
+    private function getSmtpUsername()
+    {
+        $username = getenv('TRAVIS_SMTP_USERNAME');
+
+        if (!$username) {
+            throw new \Exception('Impossible to send email, reason: impossible to get smtp username.');
+        }
+
+        return $username;
+    }
+
     private function getSmtpPassword()
     {
-        $pass = getenv('TRAVIS_SMTP_PASSWORD');
+        $pass = getenv('TRAVIS_SMTP_PASSWORD_TEST');
 
         if (!$pass) {
             throw new \Exception('Impossible to send email, reason: impossible to get smtp password.');

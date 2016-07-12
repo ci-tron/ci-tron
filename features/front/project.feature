@@ -19,5 +19,5 @@ Feature: Project management
       | Login    | nek |
       | Password | nek |
     When I press "Login"
-    Then I should see "yolo"
+    Then I should see "Projects"
 
