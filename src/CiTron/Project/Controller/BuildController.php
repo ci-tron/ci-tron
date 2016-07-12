@@ -14,6 +14,7 @@ namespace CiTron\Project\Controller;
 use CiTron\Controller\Controller;
 use CiTron\Project\Entity\Build;
 use CiTron\Project\Entity\Project;
+use CiTron\Symfony\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -22,6 +23,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class BuildController extends Controller
 {
     /**
+     * Starts a new build.
+     * 
      * @param Project $project
      * @return Build
      *
@@ -31,13 +34,12 @@ class BuildController extends Controller
      */
     public function newBuildAction(Project $project, $commit)
     {
-        //starting build
         $em = $this->getDoctrine()->getEntityManager();
 
         $build = new Build();
         $build->setProject($project);
         $build->setCommit($commit);
-        $build->setNumber(count($project->getBuilds()) + 1); // yolo
+        $build->setNumber($em->getRepository('Project:Build')->count($project) + 1);
 
         $em->persist($build);
         $em->flush();
@@ -85,6 +87,6 @@ class BuildController extends Controller
      */
     public function getBuildLogAction(Project $project, Build $build)
     {
-        return $build->getLog();
+        return $this->get('citron.project.websocket.client')->log($build);
     }
 }
