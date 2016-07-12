@@ -23,26 +23,27 @@ class ConfigurationType extends AbstractType
     {
         $builder
             ->add('language', ChoiceType::class, [
-                'choices' => Configuration::LANGUAGES
+                'choices' => Configuration::getSupportedLanguages()
             ])
             ->add('envVars', null, ['required' => false])
             ->add('preparationScript', null, ['required' => false])
             ->add('launchScript', null, ['required' => false])
-            ->add('vcs', ChoiceType::class, [
-                'choices' => Configuration::VCS,
-                'required' => 'false',
+            ->add('host', ChoiceType::class, [
+                'choices' => Configuration::getSupportedHosts(),
+                'required' => false,
             ])
         ;
 
-        $builder->get('envVars')->addModelTransformer(new ArrayToJsonDataTransformer());
-        $builder->get('preparationScript')->addModelTransformer(new ArrayToJsonDataTransformer());
-        $builder->get('launchScript')->addModelTransformer(new ArrayToJsonDataTransformer());
+//        $builder->get('envVars')->addModelTransformer(new ArrayToJsonDataTransformer());
+//        $builder->get('preparationScript')->addModelTransformer(new ArrayToJsonDataTransformer());
+//        $builder->get('launchScript')->addModelTransformer(new ArrayToJsonDataTransformer());
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'csrf_protection' => false
+            'csrf_protection' => false,
+            'by_reference' => true
         ]);
     }
 }

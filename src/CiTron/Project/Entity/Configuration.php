@@ -30,31 +30,37 @@ class Configuration extends ImmutableObject
 
     /**
      * @var string
-     * @ORM\Column(name="language", type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      * @JMS\Type("string")
      */
     protected $language;
 
     /**
      * @var string
-     * @ORM\Column(name="envVars", type="json_array", nullable=true)
+     * @ORM\Column(type="json_array", nullable=true)
      * @JMS\Type("array")
      */
     protected $envVars;
 
     /**
      * @var string
-     * @ORM\Column(name="preparationScript", type="json_array", nullable=true)
+     * @ORM\Column(type="json_array", nullable=true)
      * @JMS\Type("array")
      */
     protected $preparationScript;
 
     /**
      * @var string
-     * @ORM\Column(name="launchScript", type="json_array", nullable=true)
+     * @ORM\Column(type="json_array", nullable=true)
      * @JMS\Type("array")
      */
     protected $launchScript;
+
+    /**
+     * @var string
+     * @ORM\Column(nullable=true)
+     */
+    protected $host;
 
     /**
      * @var string
@@ -73,6 +79,30 @@ class Configuration extends ImmutableObject
             ->setLanguage($language)
         ;
     }
+    
+    static public function getSupportedLanguages()
+    {
+        return [
+            self::LANGUAGE_JAVASCRIPT,
+            self::LANGUAGE_PHP,
+        ];
+    }
+    
+    static public function getSupportedVcs()
+    {
+        return [
+            self::VCS_SVN,
+            self::VCS_GIT,
+        ];
+    }
+    
+    static public function getSupportedHosts()
+    {
+        return [
+            self::HOST_BITBUCKET,
+            self::HOST_GITHUB,
+        ];
+    }
 
     /**
      * @return string|null
@@ -86,7 +116,7 @@ class Configuration extends ImmutableObject
      * @param string $language
      * @return Configuration
      */
-    private function setLanguage($language)
+    public function setLanguage($language)
     {
         $this->language = $language;
         
@@ -102,10 +132,10 @@ class Configuration extends ImmutableObject
     }
 
     /**
-     * @param string $envVars
+     * @param array $envVars
      * @return Configuration
      */
-    private function setEnvVars($envVars)
+    public function setEnvVars($envVars)
     {
         $this->envVars = $envVars;
         
@@ -124,7 +154,7 @@ class Configuration extends ImmutableObject
      * @param string $preparationScript
      * @return Configuration
      */
-    private function setPreparationScript($preparationScript)
+    public function setPreparationScript($preparationScript)
     {
         $this->preparationScript = $preparationScript;
         
@@ -143,7 +173,7 @@ class Configuration extends ImmutableObject
      * @param string $launchScript
      * @return Configuration
      */
-    private function setLaunchScript($launchScript)
+    public function setLaunchScript($launchScript)
     {
         $this->launchScript = $launchScript;
         
@@ -162,10 +192,29 @@ class Configuration extends ImmutableObject
      * @param string $vcs
      * @return Configuration
      */
-    private function setVcs($vcs)
+    public function setVcs($vcs)
     {
         $this->vcs = $vcs;
         
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHost()
+    {
+        return $this->host;
+    }
+
+    /**
+     * @param string $host
+     * @return Configuration
+     */
+    public function setHost($host)
+    {
+        $this->host = $host;
+
         return $this;
     }
 }
