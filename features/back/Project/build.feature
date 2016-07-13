@@ -1,6 +1,9 @@
 @reset-schema
 Feature: Project builds
-  As an API user I should be able to manage builds
+  As an API user
+  When I have a configured project
+  And a runner available
+  I can run builds
 
   Background:
     Given the following users:

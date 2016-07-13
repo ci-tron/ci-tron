@@ -31,9 +31,14 @@ Schema of ci-tron infrastructure
 Connect as runner
 -----------------
 
+TODO
+
 Connect as front app
 --------------------
+
+TODO
 
 Connect as ci-tron
 ------------------
 
+TODO
