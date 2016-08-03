@@ -1,0 +1,7 @@
+services:
+    citron.project.websocket.client:
+        class: CiTron\Project\WebSockets\Client
+        arguments:
+            - "@jms_serializer"
+            - "%server_port%"
+            - "%server_host%"

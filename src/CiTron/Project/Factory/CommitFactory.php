@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This file is a part of ci-tron package.
  *
@@ -9,8 +8,14 @@
  * on the root directory of this project
  */
 
-namespace CiTron\Symfony\Entity;
+namespace CiTron\Project\Factory;
 
-interface ImmutableObjectInterface
+use CiTron\Project\Entity\Commit;
+
+class CommitFactory
 {
+    public function create(): Commit
+    {
+        return Commit::Create();
+    }
 }

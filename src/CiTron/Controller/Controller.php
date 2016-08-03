@@ -11,6 +11,7 @@
 namespace CiTron\Controller;
 
 use CiTron\Symfony\HttpFoundation\JsonResponse;
+use JMS\Serializer\SerializationContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller as BaseController;
 use Symfony\Component\Form\FormInterface;
 
@@ -31,6 +32,20 @@ class Controller extends BaseController
     protected function createNamedForm($name, $type, $data = null, array $options = [])
     {
         return $this->get('form.factory')->createNamed($name, $type, $data, $options);
+    }
+
+    /**
+     * @param mixed $data
+     * @param array $groups
+     * @return string
+     */
+    protected function serializeWithGroups($data, $groups)
+    {
+        return $this->get('jms_serializer')->serialize(
+            $data,
+            'json',
+            SerializationContext::create()->setGroups($groups)
+        );
     }
 
     /**

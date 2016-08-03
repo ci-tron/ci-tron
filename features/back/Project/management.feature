@@ -124,14 +124,14 @@ Feature: Project management
     Given I am logged with username "nek" and password "nek"
     And I prepare a POST request on "back/secured/users/nek/projects/yolo/config/edit"
     And I specified the following request body:
-      | language             | php                                  |
+      | language             | PHP                                  |
       | envVars[0]           | FOO=bar                              |
       | envVars[1]           | ALPHA=bravo                          |
       | preparationScript[0] | git clone git:github.com/foo/bar.git |
       | preparationScript[1] | composer install                     |
       | preparationScript[2] | bin/console do:da:cr                 |
       | launchScript[0]      | bin/console server:run               |
-      | vcs                  | github                               |
+      | host                 | GITHUB                               |
     When I send the request
     Then I should receive a 200 response
     And the response should contains the following json:
@@ -140,11 +140,11 @@ Feature: Project management
           "id": 1,
           "slug": "yolo",
           "configuration": {
-            "language": "php",
-            "env_vars": "[\"FOO=bar\",\"ALPHA=bravo\"]",
-            "preparation_script": "[\"git clone git:github.com\\\/foo\\\/bar.git\",\"composer install\",\"bin\\\/console do:da:cr\"]",
-            "launch_script": "[\"bin\\\/console server:run\"]",
-            "vcs": "github"
+            "language": "PHP",
+            "env_vars": ["FOO=bar","ALPHA=bravo"],
+            "preparation_script": ["git clone git:github.com\/foo\/bar.git","composer install","bin\/console do:da:cr"],
+            "launch_script": ["bin\/console server:run"],
+            "host": "GITHUB"
           }
         }
       """
@@ -154,11 +154,11 @@ Feature: Project management
     And the response should contains the following json:
       """
         {
-          "language": "php",
-          "env_vars": "[\"FOO=bar\",\"ALPHA=bravo\"]",
-          "preparation_script": "[\"git clone git:github.com\\\/foo\\\/bar.git\",\"composer install\",\"bin\\\/console do:da:cr\"]",
-          "launch_script": "[\"bin\\\/console server:run\"]",
-          "vcs": "github"
+          "language": "PHP",
+          "env_vars": ["FOO=bar","ALPHA=bravo"],
+          "preparation_script": ["git clone git:github.com\/foo\/bar.git","composer install","bin\/console do:da:cr"],
+          "launch_script": ["bin\/console server:run"],
+          "host": "GITHUB"
         }
       """
 

@@ -12,6 +12,7 @@
 namespace CiTron\Project\Entity;
 
 use CiTron\User\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use JMS\Serializer\Annotation as JMS;
@@ -77,6 +78,7 @@ class Project
      * @ORM\Embedded(class = "Configuration")
      * @JMS\Groups({"standard", "current"})
      * @JMS\Expose
+     * @JMS\Type("CiTron\Project\Entity\Configuration")
      */
     private $configuration;
 
@@ -87,6 +89,13 @@ class Project
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $user;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="CiTron\Project\Entity\Build", mappedBy="project", cascade={"remove"})
+     */
+    private $builds;
 
     public function __construct()
     {
@@ -199,5 +208,43 @@ class Project
     public function setConfiguration($configuration)
     {
         $this->configuration = $configuration;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBuilds()
+    {
+        return $this->builds;
+    }
+
+    /**
+     * @param Build $build
+     * @return $this
+     */
+    public function addBuild(Build $build)
+    {
+        $this->builds->add($build);
+
+        return $this;
+    }
+
+    /**
+     * @param Build $build
+     * @return $this
+     */
+    public function removeBuild(Build $build)
+    {
+        return $this->builds->removeElement($build);
+
+        return $this;
+    }
+
+    /**
+     * @param ArrayCollection $builds
+     */
+    public function setBuilds(ArrayCollection $builds)
+    {
+        $this->builds = $builds;
     }
 }
