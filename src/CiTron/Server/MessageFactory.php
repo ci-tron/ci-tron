@@ -18,11 +18,11 @@ class MessageFactory
     public static function createMessage($str)
     {
         $message = new Message();
-        preg_match('/^([A-Z]+):([a-z\_]+):(.*)/', $str, $matches);
+        preg_match('/^([A-Z]+):([a-z\_]+):([\s\S]*)/', $str, $matches);
         
         switch ($matches[1]) {
             case Message::RUNNER:
-            case Message::API:    
+            case Message::API:
             case Message::WEB:
                 $message->setType($matches[1]);
                 break;
@@ -34,7 +34,7 @@ class MessageFactory
         
         $json = json_decode($matches[3], true);
         if ($json === null && $matches[3] !== null && $matches[3] !== '') {
-            throw new InvalidMessageException;
+            throw new InvalidMessageException(sprintf("Impossible to decode json string:\n%s\n\nFrom message:\n%s", $matches[3], $str));
         }
         $message->setContent($json);
         $message->setRawContent($matches[3]);

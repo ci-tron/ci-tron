@@ -90,6 +90,7 @@ class Server implements MessageComponentInterface
 
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
+        $this->output->write(sprintf('<error>An error occured: %s</error>', $e->getMessage()));
         $conn->close();
     }
 

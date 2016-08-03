@@ -17,13 +17,12 @@ Feature: Project builds
 
   Scenario: I launch a build
     Given I am logged with username "nek" and password "nek"
-    And I prepare a GET request on "back/secured/users/nek/projects/yolo/builds/new"
+    And I prepare a GET request on "back/secured/projects/yolo/builds/new/11bd7f047cc09e3184fc3d389c31d2300352fea0"
     When I send the request
     Then I should receive a 200 response
     And the response should contains the following json:
       """
         {
-          "id": 1,
           "number": 1,
           "state": "WAITING"
         }

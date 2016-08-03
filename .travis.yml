@@ -32,6 +32,8 @@ before_install:
     - java -jar selenium-server-standalone-2.53.0.jar > /dev/null 2> /dev/null &
     - sleep 5
 
+
+
 install:
     - npm install -g gulp-cli
     - npm install jspm
@@ -43,6 +45,17 @@ install:
     - php bin/console doctrine:schema:update --force -e=test
     - gulp serve.test &
     - sleep 10
+
+    # Starting the server
+    - ./bin/console citron:server &
+
+    # Installation of ci-tron simple runner
+    - cd ..
+    - git clone git@github.com:ci-tron/runner-php.git
+    - cd runner-php
+    - composer install
+    - ./runner &
+
+script:
     - ./bin/behat --format=progress
     - ./bin/phpspec run --format=pretty
-
