@@ -31,8 +31,9 @@ class DefaultController extends SfController
         }
 
         if (in_array($this->container->getParameter('kernel.environment'), ['dev', 'test'])) {
-            return new Response(file_get_contents($rootDir . '/../src-js/dev.html'));
+            return new Response(file_get_contents($rootDir . '/../src-js/index.html'));
         }
+
         if ($this->container->getParameter('kernel.environment') === 'prod') {
             return new Response(file_get_contents($rootDir . '/../src-js/prod.html'));
         }

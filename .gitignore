@@ -16,7 +16,7 @@ behat.yml
 /node_modules
 /npm-debug.log
 /src-js/**/*.js
-/web/jspm_packages
+/src-js/**/*.js.map
 /web/app
 /web/build
 /typings
