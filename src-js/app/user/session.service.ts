@@ -24,7 +24,6 @@ export class Session {
         if (this.active !== null) {
             return new Promise<Session>((resolve: any, reject: any) => {
                 resolve(this);
-                reject('nope');
             });
         }
 
@@ -33,7 +32,6 @@ export class Session {
                 this.active = res.status === 200;
                 resolve(this);
             }, reject);
-            reject('nope');
         });
     }
 
@@ -58,7 +56,6 @@ export class Session {
                 this.active = false;
                 resolve(this);
             }, reject);
-            reject('nope');
         })
     }
 }

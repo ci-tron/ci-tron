@@ -55,9 +55,7 @@ export class AppComponent implements OnInit  {
     ngOnInit() {
         this.session.init().then(
             (session:Session) => this.logged = session.isActive(),
-            // (reject: any) => console.log("then: " + reject)
             (error: Error) => console.error(error)
-
         );
     }
 }
