@@ -33,15 +33,12 @@ before_install:
     - sleep 5
 
 install:
-    - npm install -g gulp-cli
-    - npm install jspm
-    - jspm config registries.github.auth $JSPM_GITHUB_AUTH_TOKEN
     - npm install
-    - ls web/jspm_packages
     - composer install --prefer-source --dev
     - php bin/console doctrine:database:create -e=test
     - php bin/console doctrine:schema:update --force -e=test
-    - gulp serve.test &
+    - bin/console server:start -e test
+    - npm test &
     - sleep 10
     - ./bin/behat --format=progress
     - ./bin/phpspec run --format=pretty

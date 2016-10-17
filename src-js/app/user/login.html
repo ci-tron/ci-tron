@@ -6,15 +6,14 @@
                 <p *ngIf="error">{{error}}</p>
                 <div class="form-group">
                     <label for="username">Login</label>
-                    <input type="text" class="form-control" id="username" [(ngModel)]="username">
+                    <input [(ngModel)]="username" type="text" class="form-control" id="username" [ngModelOptions]="{standalone: true}">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" [(ngModel)]="password" id="password">
+                    <input [(ngModel)]="password" type="password" class="form-control" id="password" [ngModelOptions]="{standalone: true}">
                 </div>
                 <button type="submit" class="btn btn-default pull-right">Login</button>
             </form>
         </div>
     </div>
 </div>
-
