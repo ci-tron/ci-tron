@@ -12,30 +12,36 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['', '.js', '.ts']
+        extensions: ['.js', '.ts']
     },
 
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.ts$/,
-                loaders: ['awesome-typescript-loader', 'angular2-template-loader'],
+                loaders: [
+                    {
+                        loader: 'awesome-typescript-loader',
+                        options: { configFileName: helpers.root('src-js','tsconfig.json') }
+                    }
+                    , 'angular2-template-loader'
+                ]
             },
             {
                 test: /\.html$/,
-                loader: 'html'
+                loader: 'html-loader'
             },
             {
                 test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot|ico)$/,
-                loader: 'file?name=assets/[name].[hash].[ext]'
+                loader: 'file-loader?name=assets/[name].[hash].[ext]'
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+                loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader?sourceMap' })
             },
             {
                 test: /\.less$/,
-                loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
+                loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader!less-loader' })
             }
         ]
     },
@@ -45,11 +51,18 @@ module.exports = {
             name: ['app', 'vendor', 'polyfills']
         }),
 
+        new webpack.ContextReplacementPlugin(
+            // The (\\|\/) piece accounts for path separators in *nix and Windows
+            /angular(\\|\/)core(\\|\/)@angular/,
+            helpers.root('./src-js'), // location of your src
+            {} // a map of your routes
+        ),
+
         new HtmlWebpackPlugin({
             template: 'src-js/index.html'
         }),
 
-        new ExtractTextPlugin('[name].css', { allChunks: true })
+        new ExtractTextPlugin({ filename: '[name].css', disable: false, allChunks: true })
     ],
 
     devServer: {
