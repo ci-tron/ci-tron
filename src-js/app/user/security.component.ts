@@ -11,7 +11,7 @@ import { Session } from '../user/session.service';
 
 @Component({
     selector: 'login',
-    templateUrl: './login.html',
+    template: require('./login.html'),
 })
 
 export class LoginComponent {
